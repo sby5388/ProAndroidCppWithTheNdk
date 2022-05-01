@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hellojni.HelloJni;
 import com.shenby.pacwtn.chap02.ndkbuild.databinding.ActivityChap02MainBinding;
+import com.shenby.swig.Unix;
 
 public class Chap02MainActivity extends AppCompatActivity {
 
@@ -18,6 +19,8 @@ public class Chap02MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.text.setText(mHelloJni.stringFromJNI());
+
+        binding.textUid.setText(String.format("uid:%d", Unix.getuid()));
 
     }
 }
