@@ -43,6 +43,24 @@ android {
 
 }
 
+//添加命令执行 ndk-build
+task ndkBuild(type: Exec) {
+    doFirst {
+        println "start ndk-build"
+    }
+
+    commandLine "ndk-build"
+
+    doLast {
+        println "finish ndk-build"
+    }
+
+}
+
+//preBuild这个任务作用不明确，字面上的意思是build之前，理论上是 gradle build 执行之前会调用preBuild这个任务
+//在执行preBuild之前先执行 ndkBuild,生成 动态库
+preBuild.dependsOn ndkBuild
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.3.0'
