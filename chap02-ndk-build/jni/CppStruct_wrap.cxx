@@ -406,6 +406,26 @@ SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_func_1_1SWIG_13(JNIEnv
 }
 
 
+SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_add_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jdouble jarg1) {
+  double arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (double)jarg1; 
+  add(arg1);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_add_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  add(arg1);
+}
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -37,4 +37,12 @@ public class CppStruct {
     CppStructJNI.func__SWIG_3();
   }
 
+  public static void add(double d) {
+    CppStructJNI.add__SWIG_0(d);
+  }
+
+  public static void add(int i) {
+    CppStructJNI.add__SWIG_1(i);
+  }
+
 }

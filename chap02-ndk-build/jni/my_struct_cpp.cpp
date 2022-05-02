@@ -29,3 +29,10 @@ void drawByValue(struct PointCpp pointCpp) {
 void func(int a, int b, int c) {
     LOGD("a = %d, b = %d, c = %d, sum = %d\n", a, b, c, a + b + c);
 }
+
+void add(double d){
+    LOGD("add number = %.2f \n", d);
+}
+void add(int i){
+    LOGD("add number = %d \n", i);
+}

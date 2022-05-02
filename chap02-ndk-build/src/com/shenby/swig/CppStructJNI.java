@@ -22,4 +22,6 @@ public class CppStructJNI {
   public final static native void func__SWIG_1(int jarg1, int jarg2);
   public final static native void func__SWIG_2(int jarg1);
   public final static native void func__SWIG_3();
+  public final static native void add__SWIG_0(double jarg1);
+  public final static native void add__SWIG_1(int jarg1);
 }

@@ -33,4 +33,10 @@ void drawByValue(struct PointCpp pointCpp);
  */
 void func(int a = 1, int b = 2, int c = 3);
 
+/**
+ * 函数重载
+ */
+void add(double d);
+void add(int i);
+
 #endif //PROANDROIDCPPWITHTHENDK_MY_STRUCT_CPP_HPP

@@ -33,3 +33,8 @@ extern void drawByValue(struct PointCpp pointCpp);
 /** 带默认参数的函数*/
 extern void func(int a = 1, int b = 2, int c = 3);
 
+/** 重载函数*/
+extern void add(double d);
+extern void add(int i);
+
+
