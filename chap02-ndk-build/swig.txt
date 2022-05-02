@@ -5,3 +5,6 @@ swig -java -package com.shenby.swig -outdir src/com/shenby/swig jni/Unix.i
 -package com.shenby.swig    :生成的java的包名
 -outdir src/com/shenby/swig :生成Java文件的相对位置
 jni/Unix.i                  ：使用到的源文件
+
+swig 生成枚举
+swig -java -package com.shenby.swig -outdir src/com/shenby/swig jni/MyEnum.i
