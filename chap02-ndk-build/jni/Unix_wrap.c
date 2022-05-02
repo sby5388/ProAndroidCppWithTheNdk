@@ -211,6 +211,8 @@ SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionCodes code, const char *
 
 /* 包含POSIX 操作系统API */
 #include <unistd.h>
+#include "my_number.h"
+
 
 
 #ifdef __cplusplus
@@ -226,6 +228,28 @@ Java_com_shenby_swig_UnixJNI_getuid(JNIEnv *jenv,jclass jcls) {
     result = (uid_t) getuid();
     jresult = (jlong) result;
     return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_UnixJNI_counter_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1;
+  counter = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_counter_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+
+  (void)jenv;
+  (void)jcls;
+  result = (int)counter;
+  jresult = (jint)result;
+  return jresult;
 }
 
 

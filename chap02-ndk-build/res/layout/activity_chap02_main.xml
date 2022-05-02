@@ -26,4 +26,39 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:text="uid:10010" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_number_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="200" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_get_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取值"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_number_value" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_value_increase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数值+1"
+        app:layout_constraintStart_toEndOf="@id/button_get_value"
+        app:layout_constraintTop_toBottomOf="@id/text_number_value" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_value_reduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数值-1"
+        app:layout_constraintStart_toEndOf="@id/button_value_increase"
+        app:layout_constraintTop_toBottomOf="@id/text_number_value" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

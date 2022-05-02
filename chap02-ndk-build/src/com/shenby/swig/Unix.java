@@ -12,4 +12,13 @@ public class Unix {
     public static long getuid() {
         return UnixJNI.getuid();
     }
+
+    public static int getCounter() {
+        return UnixJNI.counter_get();
+    }
+
+    public static void setCounter(int value) {
+        UnixJNI.counter_set(value);
+    }
+
 }

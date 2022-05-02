@@ -10,4 +10,8 @@ package com.shenby.swig;
 
 public class UnixJNI {
     public final static native long getuid();
+
+    public final static native void counter_set(int jarg1);
+
+    public final static native int counter_get();
 }
