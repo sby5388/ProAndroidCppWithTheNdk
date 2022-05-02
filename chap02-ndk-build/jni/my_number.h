@@ -9,5 +9,13 @@
  */
 
 int counter = 0;
+/**
+ * 只读全局变量
+ */
+const int readOnly = 100;
+/**
+ * 全局读写变量
+ */
+int readWrite = 200;
 
 #endif //PROANDROIDCPPWITHTHENDK_BY_NUMBER_H

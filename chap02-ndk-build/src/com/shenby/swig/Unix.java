@@ -8,17 +8,29 @@
 
 package com.shenby.swig;
 
-public class Unix {
-    public static long getuid() {
-        return UnixJNI.getuid();
-    }
+public class Unix implements UnixConstants {
+  public static long getuid() {
+    return UnixJNI.getuid();
+  }
 
-    public static int getCounter() {
-        return UnixJNI.counter_get();
-    }
+  public static void setCounter(int value) {
+    UnixJNI.counter_set(value);
+  }
 
-    public static void setCounter(int value) {
-        UnixJNI.counter_set(value);
-    }
+  public static int getCounter() {
+    return UnixJNI.counter_get();
+  }
+
+  public static int getReadOnly() {
+    return UnixJNI.readOnly_get();
+  }
+
+  public static void setReadWrite(int value) {
+    UnixJNI.readWrite_set(value);
+  }
+
+  public static int getReadWrite() {
+    return UnixJNI.readWrite_get();
+  }
 
 }

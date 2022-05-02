@@ -9,9 +9,13 @@
 package com.shenby.swig;
 
 public class UnixJNI {
-    public final static native long getuid();
-
-    public final static native void counter_set(int jarg1);
-
-    public final static native int counter_get();
+  public final static native long getuid();
+  public final static native void counter_set(int jarg1);
+  public final static native int counter_get();
+  public final static native int MAX_WIDTH_get();
+  public final static native int MAX_HEIGHT_get();
+  public final static native int MIN_HEIGHT_get();
+  public final static native int readOnly_get();
+  public final static native void readWrite_set(int jarg1);
+  public final static native int readWrite_get();
 }

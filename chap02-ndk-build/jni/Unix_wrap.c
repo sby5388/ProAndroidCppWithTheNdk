@@ -141,7 +141,7 @@
 
 /* Fix for jlong on some versions of gcc on Windows */
 #if defined(__GNUC__) && !defined(__INTEL_COMPILER)
-typedef long long __int64;
+  typedef long long __int64;
 #endif
 
 /* Fix for jlong on 64-bit x86 Solaris */
@@ -158,49 +158,48 @@ typedef long long __int64;
 
 /* Support for throwing Java exceptions */
 typedef enum {
-    SWIG_JavaOutOfMemoryError = 1,
-    SWIG_JavaIOException,
-    SWIG_JavaRuntimeException,
-    SWIG_JavaIndexOutOfBoundsException,
-    SWIG_JavaArithmeticException,
-    SWIG_JavaIllegalArgumentException,
-    SWIG_JavaNullPointerException,
-    SWIG_JavaDirectorPureVirtual,
-    SWIG_JavaUnknownError,
-    SWIG_JavaIllegalStateException,
+  SWIG_JavaOutOfMemoryError = 1,
+  SWIG_JavaIOException,
+  SWIG_JavaRuntimeException,
+  SWIG_JavaIndexOutOfBoundsException,
+  SWIG_JavaArithmeticException,
+  SWIG_JavaIllegalArgumentException,
+  SWIG_JavaNullPointerException,
+  SWIG_JavaDirectorPureVirtual,
+  SWIG_JavaUnknownError,
+  SWIG_JavaIllegalStateException,
 } SWIG_JavaExceptionCodes;
 
 typedef struct {
-    SWIG_JavaExceptionCodes code;
-    const char *java_exception;
+  SWIG_JavaExceptionCodes code;
+  const char *java_exception;
 } SWIG_JavaExceptions_t;
 
 
-static void SWIGUNUSED
-SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionCodes code, const char *msg) {
-    jclass excep;
-    static const SWIG_JavaExceptions_t java_exceptions[] = {
-            {SWIG_JavaOutOfMemoryError,          "java/lang/OutOfMemoryError"},
-            {SWIG_JavaIOException,               "java/io/IOException"},
-            {SWIG_JavaRuntimeException,          "java/lang/RuntimeException"},
-            {SWIG_JavaIndexOutOfBoundsException, "java/lang/IndexOutOfBoundsException"},
-            {SWIG_JavaArithmeticException,       "java/lang/ArithmeticException"},
-            {SWIG_JavaIllegalArgumentException,  "java/lang/IllegalArgumentException"},
-            {SWIG_JavaNullPointerException,      "java/lang/NullPointerException"},
-            {SWIG_JavaDirectorPureVirtual,       "java/lang/RuntimeException"},
-            {SWIG_JavaUnknownError,              "java/lang/UnknownError"},
-            {SWIG_JavaIllegalStateException,     "java/lang/IllegalStateException"},
-            {(SWIG_JavaExceptionCodes) 0,        "java/lang/UnknownError"}
-    };
-    const SWIG_JavaExceptions_t *except_ptr = java_exceptions;
+static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionCodes code, const char *msg) {
+  jclass excep;
+  static const SWIG_JavaExceptions_t java_exceptions[] = {
+    { SWIG_JavaOutOfMemoryError, "java/lang/OutOfMemoryError" },
+    { SWIG_JavaIOException, "java/io/IOException" },
+    { SWIG_JavaRuntimeException, "java/lang/RuntimeException" },
+    { SWIG_JavaIndexOutOfBoundsException, "java/lang/IndexOutOfBoundsException" },
+    { SWIG_JavaArithmeticException, "java/lang/ArithmeticException" },
+    { SWIG_JavaIllegalArgumentException, "java/lang/IllegalArgumentException" },
+    { SWIG_JavaNullPointerException, "java/lang/NullPointerException" },
+    { SWIG_JavaDirectorPureVirtual, "java/lang/RuntimeException" },
+    { SWIG_JavaUnknownError,  "java/lang/UnknownError" },
+    { SWIG_JavaIllegalStateException, "java/lang/IllegalStateException" },
+    { (SWIG_JavaExceptionCodes)0,  "java/lang/UnknownError" }
+  };
+  const SWIG_JavaExceptions_t *except_ptr = java_exceptions;
 
-    while (except_ptr->code != code && except_ptr->code)
-        except_ptr++;
+  while (except_ptr->code != code && except_ptr->code)
+    except_ptr++;
 
-    (*jenv)->ExceptionClear(jenv);
-    excep = (*jenv)->FindClass(jenv, except_ptr->java_exception);
-    if (excep)
-        (*jenv)->ThrowNew(jenv, excep, msg);
+  (*jenv)->ExceptionClear(jenv);
+  excep = (*jenv)->FindClass(jenv, except_ptr->java_exception);
+  if (excep)
+    (*jenv)->ThrowNew(jenv, excep, msg);
 }
 
 
@@ -209,7 +208,7 @@ SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionCodes code, const char *
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_JavaThrowException(jenv, SWIG_JavaIllegalArgumentException, msg); return nullreturn; } else
 
 
-/* 包含POSIX 操作系统API */
+/** 包含POSIX 操作系统API */
 #include <unistd.h>
 #include "my_number.h"
 
@@ -219,24 +218,24 @@ SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionCodes code, const char *
 extern "C" {
 #endif
 
-SWIGEXPORT jlong JNICALL
-Java_com_shenby_swig_UnixJNI_getuid(JNIEnv *jenv,jclass jcls) {
-    jlong jresult = 0;
-    uid_t result;
-    (void)jenv;
-    (void)jcls;
-    result = (uid_t) getuid();
-    jresult = (jlong) result;
-    return jresult;
+SWIGEXPORT jlong JNICALL Java_com_shenby_swig_UnixJNI_getuid(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  uid_t result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (uid_t)getuid();
+  jresult = (jlong)result; 
+  return jresult;
 }
 
 
 SWIGEXPORT void JNICALL Java_com_shenby_swig_UnixJNI_counter_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
   int arg1 ;
-
+  
   (void)jenv;
   (void)jcls;
-  arg1 = (int)jarg1;
+  arg1 = (int)jarg1; 
   counter = arg1;
 }
 
@@ -244,11 +243,81 @@ SWIGEXPORT void JNICALL Java_com_shenby_swig_UnixJNI_counter_1set(JNIEnv *jenv, 
 SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_counter_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
-
+  
   (void)jenv;
   (void)jcls;
   result = (int)counter;
-  jresult = (jint)result;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_MAX_1WIDTH_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(640);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_MAX_1HEIGHT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(320);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_MIN_1HEIGHT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(160);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_readOnly_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)readOnly;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_UnixJNI_readWrite_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  readWrite = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_readWrite_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)readWrite;
+  jresult = (jint)result; 
   return jresult;
 }
 

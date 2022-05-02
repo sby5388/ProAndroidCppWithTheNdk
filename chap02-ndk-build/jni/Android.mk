@@ -17,5 +17,12 @@ include $(LOCAL_PATH)/my_swig_generate.mk
 
 include $(BUILD_SHARED_LIBRARY)
 
+ifdef Unix_wrap
+#只是起引用作用而已,不会编译动态库
+include $(CLEAR_VARS)
+LOCAL_MODULE := Unix_wrap
+LOCAL_SRC_FILES := Unix_wrap.c
+include $(BUILD_SHARED_LIBRARY)
+endif
 
 
