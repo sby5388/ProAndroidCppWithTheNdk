@@ -20,7 +20,7 @@ import com.shenby.swig.Week;
 import java.util.Locale;
 
 public class Chap02MainActivity extends AppCompatActivity {
-    public static final String TAG = "Chap02NdkBuild";
+    public static final String TAG = "chap02NdkBuild";
 
     private final HelloJni mHelloJni = new HelloJni();
     private ActivityChap02MainBinding mBinding;
@@ -46,11 +46,21 @@ public class Chap02MainActivity extends AppCompatActivity {
         testStruct();
         testCppStruct();
         testCppStructParam();
+        testDefaultParam();
+    }
+
+    /**
+     * 测试带默认参数的函数
+     */
+    private void testDefaultParam() {
+        CppStruct.func();
+        CppStruct.func(20);
+        CppStruct.func(20, 30);
+        CppStruct.func(20, 30, 50);
     }
 
     /**
      * 测试cpp传递参数的指针，引用，值
-     *  fixme 三个native方法没有成功地打印
      */
     private void testCppStructParam() {
         Log.d(TAG, "testCppStructParam: start");

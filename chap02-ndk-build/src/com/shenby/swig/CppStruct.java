@@ -21,4 +21,20 @@ public class CppStruct {
     CppStructJNI.drawByValue(PointCpp.getCPtr(pointCpp), pointCpp);
   }
 
+  public static void func(int a, int b, int c) {
+    CppStructJNI.func__SWIG_0(a, b, c);
+  }
+
+  public static void func(int a, int b) {
+    CppStructJNI.func__SWIG_1(a, b);
+  }
+
+  public static void func(int a) {
+    CppStructJNI.func__SWIG_2(a);
+  }
+
+  public static void func() {
+    CppStructJNI.func__SWIG_3();
+  }
+
 }

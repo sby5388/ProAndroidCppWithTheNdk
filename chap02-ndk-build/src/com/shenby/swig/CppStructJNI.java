@@ -18,4 +18,8 @@ public class CppStructJNI {
   public final static native void drawByPointer(long jarg1, PointCpp jarg1_);
   public final static native void drawByReference(long jarg1, PointCpp jarg1_);
   public final static native void drawByValue(long jarg1, PointCpp jarg1_);
+  public final static native void func__SWIG_0(int jarg1, int jarg2, int jarg3);
+  public final static native void func__SWIG_1(int jarg1, int jarg2);
+  public final static native void func__SWIG_2(int jarg1);
+  public final static native void func__SWIG_3();
 }

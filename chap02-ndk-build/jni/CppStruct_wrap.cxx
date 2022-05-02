@@ -363,6 +363,49 @@ SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_drawByValue(JNIEnv *je
 }
 
 
+SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_func_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jint jarg3) {
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  func(arg1,arg2,arg3);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_func_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2) {
+  int arg1 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  arg2 = (int)jarg2; 
+  func(arg1,arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_func_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  func(arg1);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_CppStructJNI_func_1_1SWIG_13(JNIEnv *jenv, jclass jcls) {
+  (void)jenv;
+  (void)jcls;
+  func();
+}
+
+
 #ifdef __cplusplus
 }
 #endif

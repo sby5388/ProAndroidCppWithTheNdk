@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := hello-jni
 LOCAL_SRC_FILES := hello-jni.c
-#LOCAL_SRC_FILES += my_struct_cpp.cpp
+LOCAL_LDLIBS:=-llog
 
 #生成代理类的包
 MY_SWIG_PACKAGE := com.shenby.swig
