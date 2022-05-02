@@ -8,3 +8,7 @@ jni/Unix.i                  ：使用到的源文件
 
 swig 生成枚举
 swig -java -package com.shenby.swig -outdir src/com/shenby/swig jni/MyEnum.i
+
+swig 生成结构体
+swig -java -package com.shenby.swig -outdir src/com/shenby/swig jni/MyStruct.i
+
