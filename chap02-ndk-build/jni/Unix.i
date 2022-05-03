@@ -15,8 +15,8 @@ typedef unsigned int uid_t;
 %exception getuid{
     $action
     if(!result){
-        jclass clazz = jenv->FindClass("java/lang/OutOfMemoryError");
-        jenv -> ThrowNew(clazz,"Out of Memory");
+        jclass clazz = (*jenv)->FindClass(jenv, "java/lang/OutOfMemoryError");
+        (*jenv) -> ThrowNew(clazz, "Out of Memory");
         return $null;
     }
 }
@@ -24,8 +24,8 @@ typedef unsigned int uid_t;
 %javaexception("java.lang.IllegalAccessException") getuid{
     $action
     if(!result){
-        jclass clazz = jenv->FindClass("java/lang/IllegalAccessException");
-        jenv->ThrowNew(clazz,"IllegalAccess");
+        jclass clazz = (*jenv)->FindClass(jenv, "java/lang/IllegalAccessException");
+        (*jenv)->ThrowNew(jenv, clazz, "IllegalAccess");
         return $null;
     }
 }

@@ -35,7 +35,11 @@ public class Chap02MainActivity extends AppCompatActivity {
 
         mBinding.text.setText(mHelloJni.stringFromJNI());
 
-        mBinding.textUid.setText(String.format(Locale.CHINESE, "uid:%d", Unix.getuid()));
+        try {
+            mBinding.textUid.setText(String.format(Locale.CHINESE, "uid:%d", Unix.getuid()));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         mBinding.buttonGetValue.setOnClickListener(v -> updateNumber());
         mBinding.buttonValueIncrease.setOnClickListener(v -> increaseValue());
