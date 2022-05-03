@@ -12,6 +12,7 @@ import com.shenby.swig.MyEnumConstants;
 import com.shenby.swig.Numbers;
 import com.shenby.swig.Point;
 import com.shenby.swig.PointCpp;
+import com.shenby.swig.Student;
 import com.shenby.swig.Unix;
 import com.shenby.swig.UnixConstants;
 import com.shenby.swig.UnsafeNumbers;
@@ -49,6 +50,18 @@ public class Chap02MainActivity extends AppCompatActivity {
         testDefaultParam();
 
         testFunctionOverloading();
+
+        testCppClass();
+    }
+
+    /**
+     * 测试c++的类
+     */
+    private void testCppClass() {
+        final Student student = new Student(20, 100.0);
+        student.show();
+        student.setId(50);
+        student.show();
     }
 
     /**

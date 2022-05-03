@@ -45,6 +45,14 @@ MY_SWIG_INTERFACES := CppStruct.i
 MY_SWIG_TYPE := cxx
 include $(LOCAL_PATH)/my_swig_generate.mk
 
+#生成代理类的包
+MY_SWIG_PACKAGE := com.shenby.swig
+#应该处理的SWIG接口文件列表
+MY_SWIG_INTERFACES := CppClass.i
+#SWIG生成封装程序的指令代码类型，为C或者C++
+MY_SWIG_TYPE := cxx
+include $(LOCAL_PATH)/my_swig_generate.mk
+
 
 include $(BUILD_SHARED_LIBRARY)
 

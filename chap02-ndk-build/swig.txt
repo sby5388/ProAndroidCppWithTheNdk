@@ -16,3 +16,6 @@ swig 生成cpp结构体
 todo 在前面加上 -c++
 swig -c++ -java -package com.shenby.swig -outdir src/com/shenby/swig jni/CppStruct.i
 
+swig 生成c++类
+swig -c++ -java -package com.shenby.swig -outdir src/com/shenby/swig jni/CppClass.i
+
