@@ -11,6 +11,26 @@
 /** 告诉SWIG uid_t */
 typedef unsigned int uid_t;
 
+/** getuid 函数的异常处理,要写在函数名称的前面,改变输出的c语言 */
+%exception getuid{
+    $action
+    if(!result){
+        jclass clazz = jenv->FindClass("java/lang/OutOfMemoryError");
+        jenv -> ThrowNew(clazz,"Out of Memory");
+        return $null;
+    }
+}
+/** getuid的java异常处理，改变输出的java语言 */
+%javaexception("java.lang.IllegalAccessException") getuid{
+    $action
+    if(!result){
+        jclass clazz = jenv->FindClass("java/lang/IllegalAccessException");
+        jenv->ThrowNew(clazz,"IllegalAccess");
+        return $null;
+    }
+}
+
+
 /** 让SWIG 包装 getuid 函数 (定义在unistd.h中)*/
 extern uid_t getuid(void);
 

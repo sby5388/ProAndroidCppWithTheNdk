@@ -9,7 +9,7 @@
 package com.shenby.swig;
 
 public class Unix implements UnixConstants {
-  public static long getuid() {
+  public static long getuid() throws java.lang.IllegalAccessException {
     return UnixJNI.getuid();
   }
 
