@@ -5,6 +5,10 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := hello-jni
 LOCAL_SRC_FILES := hello-jni.c
 LOCAL_LDLIBS:=-llog
+#启用RTTI:编译器的运行库类型信息特征
+LOCAL_CPP_FEATURES += rtti
+#打开C++ 异常控制特性支持
+LOCAL_CPP_FEATURES += exceptions
 
 #生成代理类的包
 MY_SWIG_PACKAGE := com.shenby.swig
@@ -49,6 +53,14 @@ include $(LOCAL_PATH)/my_swig_generate.mk
 MY_SWIG_PACKAGE := com.shenby.swig
 #应该处理的SWIG接口文件列表
 MY_SWIG_INTERFACES := CppClass.i
+#SWIG生成封装程序的指令代码类型，为C或者C++
+MY_SWIG_TYPE := cxx
+include $(LOCAL_PATH)/my_swig_generate.mk
+
+#生成代理类的包
+MY_SWIG_PACKAGE := com.shenby.swig
+#应该处理的SWIG接口文件列表
+MY_SWIG_INTERFACES := AsyncProvider.i
 #SWIG生成封装程序的指令代码类型，为C或者C++
 MY_SWIG_TYPE := cxx
 include $(LOCAL_PATH)/my_swig_generate.mk

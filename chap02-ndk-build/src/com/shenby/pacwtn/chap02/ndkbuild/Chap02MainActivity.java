@@ -45,6 +45,7 @@ public class Chap02MainActivity extends AppCompatActivity {
         mBinding.buttonValueIncrease.setOnClickListener(v -> increaseValue());
         mBinding.buttonValueReduce.setOnClickListener(v -> reduceValue());
 
+
         updateNumber();
         testConstantValue();
         testEnums();
@@ -56,6 +57,17 @@ public class Chap02MainActivity extends AppCompatActivity {
         testFunctionOverloading();
 
         testCppClass();
+
+        testCppAsync();
+
+    }
+
+    /**
+     * 测试从原生代码中调用java代码
+     */
+    private void testCppAsync() {
+        final UidHandler uidHandler = new UidHandler(mBinding.textUid2);
+        uidHandler.get();
     }
 
     /**

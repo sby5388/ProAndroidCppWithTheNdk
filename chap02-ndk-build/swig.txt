@@ -19,3 +19,6 @@ swig -c++ -java -package com.shenby.swig -outdir src/com/shenby/swig jni/CppStru
 swig 生成c++类
 swig -c++ -java -package com.shenby.swig -outdir src/com/shenby/swig jni/CppClass.i
 
+swig 调用java(非反射的方法)
+swig -c++ -java -package com.shenby.swig -outdir src/com/shenby/swig jni/AsyncProvider.i
+
