@@ -1,0 +1,12 @@
+使用swig 命令对 Unix.i 生成 java文件和c文件
+swig -java -package com.shenby.swig -outdir src/com/shenby/swig jni/Unix.i
+
+-java                       :生成的目标语言 JAVA
+-package com.shenby.swig    :生成的java的包名
+-outdir src/com/shenby/swig :生成Java文件的相对位置
+jni/Unix.i                  ：使用到的源文件
+
+------
+
+swig  -java -package com.shenby.swig -outdir ./src/main/java/com/shenby/swig -o ./src/main/jni/Unix_wrap.c ./src/main/jni/Unix.i
+

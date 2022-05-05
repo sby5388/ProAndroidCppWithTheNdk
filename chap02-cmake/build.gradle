@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
 }
+apply from:"swig.gradle"
 
 android {
     compileSdk 32
@@ -14,6 +15,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+//            abiFilters 'arm64-v8a'
+        }
+        externalNativeBuild {
+            cmake {
+//                abiFilters 'arm64-v8a'
+            }
+        }
     }
 
     buildTypes {
@@ -33,12 +42,23 @@ android {
         }
     }
 
+    sourceSets{
+        main{
+            jni.srcDirs = ["src/main/jni"]
+        }
+    }
+
+
     buildFeatures {
         viewBinding true
     }
 
 
 }
+
+//preBuild这个任务作用不明确，字面上的意思是build之前，理论上是 gradle build 执行之前会调用preBuild这个任务
+//在执行preBuild之前先执行 runSwig,生成 java+native
+preBuild.dependsOn runSwig
 
 dependencies {
 
