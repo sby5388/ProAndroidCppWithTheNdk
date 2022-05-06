@@ -7,6 +7,7 @@ include(${SWIG_USE_FILE})
 
 add_library(hello-jni SHARED
         Unix_wrap.c
+        MyEnum_wrap.c
         hello-jni.c)
 
 # Include libraries needed for hello-jni lib

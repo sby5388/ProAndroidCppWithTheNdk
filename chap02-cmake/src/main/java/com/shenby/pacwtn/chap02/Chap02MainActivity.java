@@ -7,8 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hellojni.HelloJni;
 import com.shenby.pacwtn.chap02.databinding.ActivityChap02MainBinding;
+import com.shenby.swig.MyEnumConstants;
+import com.shenby.swig.Numbers;
 import com.shenby.swig.Unix;
 import com.shenby.swig.UnixConstants;
+import com.shenby.swig.UnsafeNumbers;
+import com.shenby.swig.Week;
 
 import java.util.Locale;
 
@@ -35,7 +39,41 @@ public class Chap02MainActivity extends AppCompatActivity {
 
         updateNumber();
         testConstantValue();
+        testEnums();
 
+
+    }
+
+    /**
+     * 测试枚举类
+     */
+    private void testEnums() {
+        Log.d(TAG, "testEnums: 测试匿名枚举");
+        Log.d(TAG, "testEnums: ONE = " + MyEnumConstants.ONE);
+        Log.d(TAG, "testEnums: TWO = " + MyEnumConstants.TWO);
+        Log.d(TAG, "testEnums: THREE = " + MyEnumConstants.THREE);
+        Log.d(TAG, "testEnums: FOUR = " + MyEnumConstants.FOUR);
+
+        Log.d(TAG, "testEnums: 测试命名枚举");
+        Log.d(TAG, String.format(Locale.CHINESE, "testEnums: %s:%d ", Numbers.A, Numbers.A.swigValue()));
+        Log.d(TAG, String.format(Locale.CHINESE, "testEnums: %s:%d ", Numbers.B, Numbers.B.swigValue()));
+        Log.d(TAG, String.format(Locale.CHINESE, "testEnums: %s:%d ", Numbers.C, Numbers.C.swigValue()));
+        Log.d(TAG, String.format(Locale.CHINESE, "testEnums: %s:%d ", Numbers.D, Numbers.D.swigValue()));
+
+        Log.d(TAG, "testEnums: 测试被标记为不安全的命名枚举");
+        Log.d(TAG, "testEnums: UnsafeNumbers.U1 = " + UnsafeNumbers.U1);
+        Log.d(TAG, "testEnums: UnsafeNumbers.U2 = " + UnsafeNumbers.U2);
+        Log.d(TAG, "testEnums: UnsafeNumbers.U3 = " + UnsafeNumbers.U3);
+        Log.d(TAG, "testEnums: UnsafeNumbers.U4 = " + UnsafeNumbers.U4);
+
+        Log.d(TAG, "testEnums: 测试Java枚举类");
+        Log.d(TAG, "testEnums: Week.SUNDAY =  " + Week.SUNDAY);
+        Log.d(TAG, "testEnums: Week.MONDAY " + Week.MONDAY);
+        Log.d(TAG, "testEnums: Week.TUESDAY =" + Week.TUESDAY);
+        Log.d(TAG, "testEnums: Week.WEDNESDAY = " + Week.WEDNESDAY);
+        Log.d(TAG, "testEnums: Week.THURSDAY = " + Week.THURSDAY);
+        Log.d(TAG, "testEnums: Week.FRIDAY " + Week.FRIDAY);
+        Log.d(TAG, "testEnums: Week.SATURDAY = " + Week.SATURDAY);
 
     }
 
