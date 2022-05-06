@@ -9,6 +9,7 @@ import com.example.hellojni.HelloJni;
 import com.shenby.pacwtn.chap02.databinding.ActivityChap02MainBinding;
 import com.shenby.swig.MyEnumConstants;
 import com.shenby.swig.Numbers;
+import com.shenby.swig.Point;
 import com.shenby.swig.Unix;
 import com.shenby.swig.UnixConstants;
 import com.shenby.swig.UnsafeNumbers;
@@ -40,8 +41,30 @@ public class Chap02MainActivity extends AppCompatActivity {
         updateNumber();
         testConstantValue();
         testEnums();
+        testStruct();
 
 
+    }
+
+
+    /**
+     * 测试结构体
+     */
+    private void testStruct() {
+        final Point point = new Point();
+        showPoint(point);
+        point.setX(100);
+        point.setY(200);
+        showPoint(point);
+
+    }
+
+    private void showPoint(Point point) {
+        final int x = point.getX();
+        final int y = point.getY();
+
+        Log.d(TAG, "showPoint: x = " + x);
+        Log.d(TAG, "showPoint: y = " + y);
     }
 
     /**

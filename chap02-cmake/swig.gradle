@@ -31,6 +31,7 @@ def swigPackage = "com.shenby.swig"
 List<SwigBean> swigBeanList = [
         new SwigBean("Unix", false, " "),
         new SwigBean("MyEnum", false, " "),
+        new SwigBean("MyStruct", false, " "),
 ]
 
 /**
