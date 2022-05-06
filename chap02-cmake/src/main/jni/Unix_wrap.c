@@ -210,6 +210,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 /** 包含POSIX 操作系统API */
 #include <unistd.h>
+#include "my_number.h"
 
 
 
@@ -225,6 +226,98 @@ SWIGEXPORT jlong JNICALL Java_com_shenby_swig_UnixJNI_getuid(JNIEnv *jenv, jclas
   (void)jcls;
   result = (uid_t)getuid();
   jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_UnixJNI_counter_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  counter = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_counter_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)counter;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_MAX_1WIDTH_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(640);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_MAX_1HEIGHT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(320);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_MIN_1HEIGHT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)(160);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_readOnly_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)readOnly;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_UnixJNI_readWrite_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  readWrite = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_UnixJNI_readWrite_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int)readWrite;
+  jresult = (jint)result; 
   return jresult;
 }
 
