@@ -20,10 +20,4 @@ public class MyEnumJNI {
   public final static native int U3_get();
   public final static native int U4_get();
   public final static native int SUNDAY_get();
-  public final static native int MONDAY_get();
-  public final static native int TUESDAY_get();
-  public final static native int WEDNESDAY_get();
-  public final static native int THURSDAY_get();
-  public final static native int FRIDAY_get();
-  public final static native int SATURDAY_get();
 }

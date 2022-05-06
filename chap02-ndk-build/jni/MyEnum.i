@@ -23,7 +23,7 @@ enum UnsafeNumbers {
 };
 
 /** 使用 enums.swg 标记为 Java 枚举*/
-#include "enums.swg"
+%include "enums.swg"
 
 enum Week {
     SUNDAY = 0, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
