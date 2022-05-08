@@ -26,6 +26,17 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:text="uid:10010" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_uid2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="uid2 50000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        tools:text="uid:10010" />
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_number_value"

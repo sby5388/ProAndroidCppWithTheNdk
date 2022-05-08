@@ -21,6 +21,8 @@ android {
         externalNativeBuild {
             cmake {
 //                abiFilters 'arm64-v8a'
+                //todo 启用C++的rtti,和异常特性；不过好像不写上也没有出问题，还是能够正常运行
+                cppFlags "-frtti -fexceptions"
             }
         }
     }

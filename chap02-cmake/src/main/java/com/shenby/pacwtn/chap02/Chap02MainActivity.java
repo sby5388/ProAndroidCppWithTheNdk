@@ -54,6 +54,16 @@ public class Chap02MainActivity extends AppCompatActivity {
         testDefaultParam();
         testFunctionOverloading();
         testCppClass();
+
+        testCppAsync();
+    }
+
+    /**
+     * 测试从原生代码中调用java代码
+     */
+    private void testCppAsync() {
+        final UidHandler uidHandler = new UidHandler(mBinding.textUid2);
+        uidHandler.get();
     }
 
     /**

@@ -13,6 +13,8 @@ add_library(hello-jni SHARED
         my_struct_cpp.cpp
         CppClass_wrap.cxx
         Student.cpp
+        AsyncProvider_wrap.cxx
+        AsyncUidProvider.cpp
         hello-jni.c)
 
 # Include libraries needed for hello-jni lib
