@@ -224,7 +224,14 @@ SWIGEXPORT jlong JNICALL Java_com_shenby_swig_UnixJNI_getuid(JNIEnv *jenv, jclas
   
   (void)jenv;
   (void)jcls;
-  result = (uid_t)getuid();
+  {
+    result = (uid_t)getuid();
+    if(!result){
+      jclass clazz = (*jenv)->FindClass(jenv, "java/lang/IllegalAccessException");
+      (*jenv)->ThrowNew(jenv, clazz, "IllegalAccess");
+      return 0;
+    }
+  }
   jresult = (jlong)result; 
   return jresult;
 }
