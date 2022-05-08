@@ -10,3 +10,6 @@ jni/Unix.i                  ：使用到的源文件
 
 swig  -java -package com.shenby.swig -outdir ./src/main/java/com/shenby/swig -o ./src/main/jni/Unix_wrap.c ./src/main/jni/Unix.i
 
+//使用gradle单独构建，生成 java+native
+./gradlew :chap02-cmake:runSwig
+

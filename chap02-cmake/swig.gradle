@@ -28,61 +28,79 @@ class SwigBean {
  */
 def swigPackage = "com.shenby.swig"
 
-List<SwigBean> swigBeanList = [
-        new SwigBean("Unix", false, " "),
-        new SwigBean("MyEnum", false, " "),
-        new SwigBean("MyStruct", false, " "),
-]
-
 /**
  * 配置swig自动生成package
  * https://blog.csdn.net/chifu5720/article/details/102919849
  */
-task runSwig(type: Exec) {
+task runSwig() {
     doLast {
         println "stop runSwig"
     }
     doFirst {
         println "start runSwig"
     }
+    doLast {
+        ArrayList<SwigBean> swigBeanList = [
+                new SwigBean("Unix", false, " "),
+                new SwigBean("MyEnum", false, " "),
+                new SwigBean("MyStruct", false, " "),
 
-    def line = workingDir.absolutePath
-    println line
+        ]
 
-    def osName = System.getProperty("os.name").toLowerCase()
+        def osName = System.getProperty("os.name").toLowerCase()
+        println "osName = $osName"
+        def isWindowsOs = osName.contains("windows")
+        def projectDirPath = projectDir.absolutePath
 
-    println "osName = $osName"
-    def isWindowsOs = osName.contains("windows")
+        swigBeanList.forEach {
+            addSwigTask(it, projectDirPath, swigPackage, isWindowsOs)
+        }
 
-    println "工作目录 ${workingDir.absolutePath}"
-    def javaOutDir = "${line}/src/main/java/${swigPackage.replace(".", "/")}"
+    }
+}
 
+def addSwigTask(SwigBean bean, String projectDirPath, String swigPackage, boolean isWindows) {
+    println "start swig ${bean.mModuleName}"
 
-    for (SwigBean bean : swigBeanList) {
-        def swigPath = "${line}/src/main/jni/${bean.mModuleName}.i"
-        def cxx = bean.mIsCxx ? "-cxx -java" : "-java"
-        def wrapName = bean.mIsCxx ? "_wrap.cxx" : "_wrap.c"
+    def cmd = "swig"
+    def cxx = bean.ismIsCxx()
 
+    def javaOutDir = "${projectDirPath}/src/main/java/${swigPackage.replace(".", "/")}"
+    def wrapName = bean.mIsCxx ? "_wrap.cxx" : "_wrap.c"
+    def nativeFileName = "${projectDirPath}/src/main/jni/${bean.mModuleName}${wrapName}"
+    def swigFilePath = "${projectDirPath}/src/main/jni/${bean.mModuleName}.i"
 
-        if (isWindowsOs) {
-            //todo windows 未测试
-            commandLine("cmd", "/c", "swig")
+    if (isWindows) {
+        //todo windows 还没有编写好脚本
+        System.err.println("swig windows 未实现")
 
-            args(cxx, "-package", swigPackage,
+    } else {
+        if (cxx) {
+            runExec(cmd,
+                    "-c++",
+                    "-java",
+                    "-package", swigPackage,
                     "-outdir", javaOutDir,
-                    "-o", "${line}/src/main/jni/${bean.mModuleName}${wrapName}",
-                    swigPath
+                    "-o", nativeFileName,
+                    swigFilePath
             )
-
         } else {
-            //MacOs ok
-            //todo Linux 未测试
-            commandLine "swig"
-            args(cxx, "-package", swigPackage,
+            runExec(cmd,
+                    "-java",
+                    "-package", swigPackage,
                     "-outdir", javaOutDir,
-                    "-o", "${line}/src/main/jni/${bean.mModuleName}${wrapName}",
-                    swigPath
+                    "-o", nativeFileName,
+                    swigFilePath
             )
         }
+    }
+    println "finish swig ${bean.mModuleName}"
+}
+
+
+def runExec(String cmd, String... param) {
+    exec {
+        commandLine(cmd)
+        args(param)
     }
 }
