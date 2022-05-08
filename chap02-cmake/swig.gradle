@@ -44,6 +44,7 @@ task runSwig() {
                 new SwigBean("Unix", false, " "),
                 new SwigBean("MyEnum", false, " "),
                 new SwigBean("MyStruct", false, " "),
+                new SwigBean("CppStruct", true, " "),
 
         ]
 

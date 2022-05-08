@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hellojni.HelloJni;
 import com.shenby.pacwtn.chap02.databinding.ActivityChap02MainBinding;
+import com.shenby.swig.CppStruct;
 import com.shenby.swig.MyEnumConstants;
 import com.shenby.swig.Numbers;
 import com.shenby.swig.Point;
+import com.shenby.swig.PointCpp;
 import com.shenby.swig.Unix;
 import com.shenby.swig.UnixConstants;
 import com.shenby.swig.UnsafeNumbers;
@@ -42,10 +44,59 @@ public class Chap02MainActivity extends AppCompatActivity {
         testConstantValue();
         testEnums();
         testStruct();
+        testCppStruct();
+        testCppStructParam();
+        testDefaultParam();
 
 
     }
 
+
+    /**
+     * 测试带默认参数的函数
+     */
+    private void testDefaultParam() {
+        CppStruct.func();
+        CppStruct.func(20);
+        CppStruct.func(20, 30);
+        CppStruct.func(20, 30, 50);
+    }
+
+
+    /**
+     * 测试cpp传递参数的指针，引用，值
+     */
+    private void testCppStructParam() {
+        Log.d(TAG, "testCppStructParam: start");
+        final PointCpp pointCpp = new PointCpp();
+        pointCpp.setX(100);
+        pointCpp.setY(120);
+        CppStruct.drawByPointer(pointCpp);
+        CppStruct.drawByReference(pointCpp);
+        CppStruct.drawByValue(pointCpp);
+        Log.d(TAG, "testCppStructParam: end");
+
+    }
+
+    /**
+     * 测试C++结构体
+     */
+    private void testCppStruct() {
+        final PointCpp pointCpp = new PointCpp();
+        showPointCpp(pointCpp);
+        pointCpp.setX(20);
+        pointCpp.setY(40);
+        showPointCpp(pointCpp);
+    }
+
+
+    private void showPointCpp(PointCpp point) {
+        final int x = point.getX();
+        final int y = point.getY();
+
+        Log.d(TAG, "showPointCpp: x = " + x);
+        Log.d(TAG, "showPointCpp: y = " + y);
+    }
 
     /**
      * 测试结构体

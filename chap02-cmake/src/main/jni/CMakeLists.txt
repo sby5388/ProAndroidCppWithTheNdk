@@ -9,9 +9,12 @@ add_library(hello-jni SHARED
         Unix_wrap.c
         MyEnum_wrap.c
         MyStruct_wrap.c
+        CppStruct_wrap.cxx
+        my_struct_cpp.cpp
         hello-jni.c)
 
 # Include libraries needed for hello-jni lib
 target_link_libraries(hello-jni
         android
+        #下一行是链接了Android的日志模块 log
         log)
