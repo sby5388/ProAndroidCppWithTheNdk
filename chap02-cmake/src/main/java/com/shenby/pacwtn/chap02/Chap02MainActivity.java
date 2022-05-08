@@ -47,10 +47,17 @@ public class Chap02MainActivity extends AppCompatActivity {
         testCppStruct();
         testCppStructParam();
         testDefaultParam();
-
+        testFunctionOverloading();
 
     }
 
+    /**
+     * 测试函数重载
+     */
+    private void testFunctionOverloading() {
+        CppStruct.add(20);
+        CppStruct.add(50.666);
+    }
 
     /**
      * 测试带默认参数的函数
