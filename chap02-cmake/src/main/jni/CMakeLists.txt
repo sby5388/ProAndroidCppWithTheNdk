@@ -11,6 +11,8 @@ add_library(hello-jni SHARED
         MyStruct_wrap.c
         CppStruct_wrap.cxx
         my_struct_cpp.cpp
+        CppClass_wrap.cxx
+        Student.cpp
         hello-jni.c)
 
 # Include libraries needed for hello-jni lib
