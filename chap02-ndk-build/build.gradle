@@ -19,6 +19,7 @@ android {
         main {
             manifest.srcFile 'AndroidManifest2.xml'
             java.srcDirs = ['src']
+            jni.srcDirs = ['jni']
             res.srcDirs = ['res']
             jniLibs.srcDirs = ['libs']
         }
@@ -40,18 +41,37 @@ android {
         viewBinding true
     }
 
+//    externalNativeBuild {
+//        ndkBuild {
+//            path "jin/Android.mk"
+//        }
+//    }
+
 
 }
 
 //添加命令执行 ndk-build
-task ndkBuild(type: Exec) {
+task ndkBuild() {
     doFirst {
         println "start ndk-build"
     }
 
-    commandLine "ndk-build"
-
     doLast {
+        def osName = System.getProperty("os.name").toLowerCase()
+
+        println "osName = $osName"
+        def isWindowsOs = osName.contains("windows")
+
+        if (isWindowsOs) {
+            exec {
+                commandLine("cmd", "/c", "ndk-build")
+            }
+        } else {
+            exec {
+                commandLine "ndk-build"
+            }
+        }
+
         println "finish ndk-build"
     }
 

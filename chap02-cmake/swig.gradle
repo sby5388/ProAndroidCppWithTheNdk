@@ -75,7 +75,24 @@ def addSwigTask(SwigBean bean, String projectDirPath, String swigPackage, boolea
 
     if (isWindows) {
         //todo windows 还没有编写好脚本
-        System.err.println("swig windows 未实现")
+        if (cxx) {
+            runWindowsExec(cmd,
+                    "-c++",
+                    "-java",
+                    "-package", swigPackage,
+                    "-outdir", javaOutDir,
+                    "-o", nativeFileName,
+                    swigFilePath
+            )
+        } else {
+            runWindowsExec(cmd,
+                    "-java",
+                    "-package", swigPackage,
+                    "-outdir", javaOutDir,
+                    "-o", nativeFileName,
+                    swigFilePath
+            )
+        }
 
     } else {
         if (cxx) {
@@ -104,6 +121,13 @@ def addSwigTask(SwigBean bean, String projectDirPath, String swigPackage, boolea
 def runExec(String cmd, String... param) {
     exec {
         commandLine(cmd)
+        args(param)
+    }
+}
+
+def runWindowsExec(String cmd, String... param) {
+    exec {
+        commandLine("cmd", "/c", "$cmd")
         args(param)
     }
 }
