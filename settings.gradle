@@ -16,3 +16,4 @@ rootProject.name = "ProAndroidCppWithTheNdk"
 include ':app'
 include ':chap02-cmake'
 include ':chap02-ndk-build'
+include ':chap07-threads'
