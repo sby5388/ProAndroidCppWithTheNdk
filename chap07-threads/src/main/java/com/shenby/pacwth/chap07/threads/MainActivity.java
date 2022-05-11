@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Keep
     private void onNativeMessage(final String message) {
-        Log.d(TAG, "onNativeMessage: message = " + message);
+        Log.d(TAG, "onNativeMessage: thread = " + Thread.currentThread().getName() + ",message = " + message);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
      * @param iterations
      */
     private void startThreads(int threads, int iterations) {
-        javaThreads(threads, iterations);
+        //javaThreads(threads, iterations);
+        posixThreads(threads, iterations);
     }
 
     /**
