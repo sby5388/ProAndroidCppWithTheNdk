@@ -121,6 +121,8 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
 
 JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_posixThreads
         (JNIEnv *env, jobject obj, jint threads, jint iterations) {
+    //线程句柄
+    pthread_t *handles = new pthread_t[threads];
     //为每个Worker创建一个POSIX线程
     for (jint i = 0; i < threads; ++i) {
         //原生线程参数
@@ -128,13 +130,11 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_posixT
         nativeWorkerArgs->id = i;
         nativeWorkerArgs->iterations = iterations;
 
-        //线程句柄
-        pthread_t thread;
         //创建一个新线程，返回0成功，否则错误
         //第二个参数为线程属性，这里是默认值，为Null
         //第三个参数：相当于传入了一个函数指针，如同传入一个Runnable
         //第四个参数：真正的参数
-        int result = pthread_create(&thread,
+        int result = pthread_create(&handles[i],
                                     nullptr,
                                     nativeWorkerThread,
                                     (void *) nativeWorkerArgs);
@@ -143,8 +143,40 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_posixT
             jclass pJclass = env->FindClass("java/lang/RuntimeException");
             //抛出异常类
             env->ThrowNew(pJclass, "Unable to create thread");
+            goto exit;
         }
     }
+
+    //等待线程终止
+    for (jint i = 0; i < threads; ++i) {
+        void *result = nullptr;
+        //pthread_join:挂起线程的执行，直到线程执行完成；返回0时执行成功，否则失败
+        //连接每个线程句柄
+        if (0 != pthread_join(handles[i], &result)) {
+            //获取异常类
+            jclass pJclass = env->FindClass("java/lang/RuntimeException");
+            //抛出异常类
+            env->ThrowNew(pJclass, "Unable to join thread");
+        } else {
+            //准备消息
+            char message[26];
+            //todo 这个函数的作用:将格式化后的文本内容写入到message这个数组中
+            sprintf(message, "Worker %d:returned %d", i, result);
+            //来自C字符串的消息
+            jstring messageString = env->NewStringUTF(message);
+            //调用原生方法
+            env->CallVoidMethod(obj, gOnNativeMessage, messageString);
+            //检查是否产生异常
+            if (nullptr != env->ExceptionOccurred()) {
+                goto exit;
+            }
+        }
+    }
+
+    exit:
+    {
+        return;
+    };
 }
 static void *nativeWorkerThread(void *args) {
     JNIEnv *env = nullptr;
