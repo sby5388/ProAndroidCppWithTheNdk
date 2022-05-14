@@ -31,6 +31,12 @@ static JavaVM *gVm = nullptr;
  */
 static jobject gObj = nullptr;
 
+/**
+ * 互斥锁实例
+ */
+static pthread_mutex_t mutex;
+
+
 //C++按C语言来编译
 extern "C" {
 /**
@@ -57,6 +63,18 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 JNIEXPORT void JNICALL
 Java_com_shenby_pacwth_chap07_threads_MainActivity_nativeInit
         (JNIEnv *env, jobject obj) {
+    //初始化互斥锁
+    //pthread_mutex_init:第一个参数：需要初始化互斥锁变量的指针；第二个参数是互斥锁属性的结构指针，为空时使用默认值
+    //返回0：初始化成功并处于锁打开的状态，否则其他值为失败
+    if (0 != pthread_mutex_init(&mutex, nullptr)) {
+        //获取异常类
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        //抛出异常
+        env->ThrowNew(pJclass, "Unable to initialize mutex");
+        goto exit;
+    }
+
+
     if (gOnNativeMessage == nullptr) {
         //从对象中获取类
         jclass pJclass = env->GetObjectClass(obj);
@@ -95,11 +113,25 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
         env->DeleteGlobalRef(gObj);
         gObj = nullptr;
     }
+    //销毁互斥锁
+    if (0 != pthread_mutex_destroy(&mutex)) {
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        env->ThrowNew(pJclass, "Unable to destroy mutex");
+    }
 }
 
 //每隔一秒发送一个语句（反射调用JAVA）
 JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_nativeWorker
         (JNIEnv *env, jobject obj, jint id, jint iterations) {
+    //锁定互斥锁
+    //对一个已经初始化的互斥锁进行封锁操
+    //如果互斥锁已经被锁上，那么调用线程将被挂起知道到互斥锁被打开；如果返回0成功，否则失败
+    if (0 != pthread_mutex_lock(&mutex)) {
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        env->ThrowNew(pJclass, "Unable to lock mutex");
+        goto exit;
+    }
+
     //循环给定的迭代数
     for (jint i = 0; i < iterations; ++i) {
         //准备消息
@@ -117,6 +149,20 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
         //睡眠1秒
         sleep(1);
     }
+    //解锁互斥锁
+    //调度策略决定解锁后执行哪个等待互斥锁的线程
+    //返回0：成功，否则失败
+    if (0 != pthread_mutex_unlock(&mutex)) {
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        env->ThrowNew(pJclass, "Unable to unlock mutex");
+        goto exit;
+    }
+
+    exit:
+    {
+        return;
+    };
+
 }
 
 JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_posixThreads
