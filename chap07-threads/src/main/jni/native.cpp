@@ -1,11 +1,20 @@
 //
 // Created by shenby07 on 2022/5/10.
 //
+//定义使用信号量来同步线程
+#define USE_SEM 1
+
 #include <jni.h>
 #include <cstdio>
 #include <unistd.h>
 #include <pthread.h>
 #include "com_shenby_pacwth_chap07_threads_MainActivity.h"
+
+#if USE_SEM
+
+#include <semaphore.h>
+
+#endif
 
 /**
  * 原生worker线程参数
@@ -31,10 +40,17 @@ static JavaVM *gVm = nullptr;
  */
 static jobject gObj = nullptr;
 
+#if USE_SEM
+/**
+ * 信号量实例
+ */
+static sem_t sem;
+#else
 /**
  * 互斥锁实例
  */
 static pthread_mutex_t mutex;
+#endif
 
 
 //C++按C语言来编译
@@ -63,6 +79,20 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 JNIEXPORT void JNICALL
 Java_com_shenby_pacwth_chap07_threads_MainActivity_nativeInit
         (JNIEnv *env, jobject obj) {
+
+#if USE_SEM
+    //初始化信号量
+    //sem_init:第二个参数：0：只在该进程内的多个线程共享该信号量（linux只支持这个？）；其他值：多进程共享该信号量
+    //第三个参数：信号量大小：最多同时有多少个线程进入被锁的代码块
+    if (0 != sem_init(&sem, 0, 2)) {
+        //获取异常类
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        //抛出异常
+        env->ThrowNew(pJclass, "Unable to initialize sem");
+        goto exit;
+    }
+#else
+
     //初始化互斥锁
     //pthread_mutex_init:第一个参数：需要初始化互斥锁变量的指针；第二个参数是互斥锁属性的结构指针，为空时使用默认值
     //返回0：初始化成功并处于锁打开的状态，否则其他值为失败
@@ -74,6 +104,7 @@ Java_com_shenby_pacwth_chap07_threads_MainActivity_nativeInit
         goto exit;
     }
 
+#endif
 
     if (gOnNativeMessage == nullptr) {
         //从对象中获取类
@@ -113,16 +144,39 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
         env->DeleteGlobalRef(gObj);
         gObj = nullptr;
     }
+
+#if USE_SEM
+    //销毁信号量
+    //销毁一个另一个线程正在阻塞的信号量有可能导致未知的行为
+    //0：成功；其他：失败
+    if (0 != sem_destroy(&sem)) {
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        env->ThrowNew(pJclass, "Unable to destroy sem");
+    }
+#else
     //销毁互斥锁
     if (0 != pthread_mutex_destroy(&mutex)) {
         jclass pJclass = env->FindClass("java/lang/RuntimeException");
         env->ThrowNew(pJclass, "Unable to destroy mutex");
     }
+#endif
 }
 
 //每隔一秒发送一个语句（反射调用JAVA）
 JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_nativeWorker
         (JNIEnv *env, jobject obj, jint id, jint iterations) {
+
+#if USE_SEM
+    //锁定信号量
+    //如果当前信号量的值大于0，上锁成功，并且信号量的值递减；如果信号量的值为0，那么则挂起
+    //返回0：成功；否则失败
+    if (0 != sem_wait(&sem)) {
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        env->ThrowNew(pJclass, "Unable to lock sem(swm_wait)");
+        goto exit;
+    }
+
+#else
     //锁定互斥锁
     //对一个已经初始化的互斥锁进行封锁操
     //如果互斥锁已经被锁上，那么调用线程将被挂起知道到互斥锁被打开；如果返回0成功，否则失败
@@ -131,6 +185,7 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
         env->ThrowNew(pJclass, "Unable to lock mutex");
         goto exit;
     }
+#endif
 
     //循环给定的迭代数
     for (jint i = 0; i < iterations; ++i) {
@@ -149,6 +204,18 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
         //睡眠1秒
         sleep(1);
     }
+
+#if USE_SEM
+    //解锁信号量
+    //解锁信号量之后，信号量的值会+1
+    //返回0：成功；否则失败
+    if (0 != sem_post(&sem)) {
+        jclass pJclass = env->FindClass("java/lang/RuntimeException");
+        env->ThrowNew(pJclass, "Unable to unlock sem(sem_post)");
+        goto exit;
+    }
+
+#else
     //解锁互斥锁
     //调度策略决定解锁后执行哪个等待互斥锁的线程
     //返回0：成功，否则失败
@@ -157,6 +224,7 @@ JNIEXPORT void JNICALL Java_com_shenby_pacwth_chap07_threads_MainActivity_native
         env->ThrowNew(pJclass, "Unable to unlock mutex");
         goto exit;
     }
+#endif
 
     exit:
     {
