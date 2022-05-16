@@ -213,6 +213,61 @@ static void ConnectToAddress(
         const char *ip,
         unsigned short port);
 
+/**
+ * Constructs a new UDP socket.
+ *
+ * @param env JNIEnv interface.
+ * @param obj object instance.
+ * @return socket descriptor.
+ * @throws IOException
+ */
+static int NewUdpSocket(JNIEnv *env, jobject obj);
+
+
+/**
+ * 从socket中阻塞并接收数据报保存到缓冲区，填充客户端地址
+ * Block and receive datagram from the socket into
+ * the buffer, and populate the client address.
+ *
+ * @param env JNIEnv interface.
+ * @param obj object instance.
+ * @param sd socket descriptor.
+ * @param address client address.
+ * @param buffer data buffer.
+ * @param bufferSize buffer size.
+ * @return receive size.
+ * @throws IOException
+ */
+static ssize_t ReceiveDatagramFromSocket(
+        JNIEnv *env,
+        jobject obj,
+        int sd,
+        struct sockaddr_in *address,
+        char *buffer,
+        size_t bufferSize);
+
+
+/**
+ * 用给定的socket发送数据报到给定的地址
+ * Sends datagram to the given address using the given socket.
+ *
+ * @param env JNIEnv interface.
+ * @param obj object instance.
+ * @param sd socket descriptor.
+ * @param address remote address.
+ * @param buffer data buffer.
+ * @param bufferSize buffer size.
+ * @return sent size.
+ * @throws IOException
+ */
+static ssize_t SendDatagramToSocket(
+        JNIEnv *env,
+        jobject obj,
+        int sd,
+        const struct sockaddr_in *address,
+        const char *buffer,
+        size_t bufferSize);
+
 extern "C" JNIEXPORT void
 Java_com_shenby_pacwth_echo_EchoServerActivity_nativeStartTcpServer(
         JNIEnv *env,
@@ -274,7 +329,47 @@ Java_com_shenby_pacwth_echo_EchoServerActivity_nativeStartUdpServer(
         JNIEnv *env,
         jobject obj,
         jint port) {
-    //todo
+    int serverSocket = NewUdpSocket(env, obj);
+    if (nullptr == env->ExceptionOccurred()) {
+        BindSocketToPort(env, obj, serverSocket, (unsigned short) port);
+        if (env->ExceptionOccurred() != nullptr) goto exit;
+        //如果请求随机端口号
+        if (port == 0) {
+            //获取当前socket绑定的端口号
+            unsigned short bindPort = GetSocketPort(env, obj, serverSocket);
+            LogMessage(env, obj, "UdpServer port = %d", bindPort);
+            if (env->ExceptionOccurred() != nullptr) goto exit;
+
+            //客户端地址
+            struct sockaddr_in address;
+            memset(&address, 0, sizeof(address));
+
+            char buffer[MAX_BUFFER_SIZE];
+            ssize_t recvSize;
+            ssize_t sentSize;
+
+            //从socket中接收
+            recvSize = ReceiveDatagramFromSocket(env, obj, serverSocket, &address,
+                                                 buffer, MAX_BUFFER_SIZE);
+            if (0 == recvSize || nullptr != env->ExceptionOccurred()) {
+                goto exit;
+            }
+            //发送给socket
+            sentSize = SendDatagramToSocket(env, obj, serverSocket, &address,
+                                            buffer, (size_t) recvSize);
+            LogMessage(env, obj, "recvSize = %d;sentSize = %d ", recvSize, sentSize);
+
+
+        }
+    }
+    //由于基于UDP的服务器是无连接的，所以既不需要监听函数也不需要接收函数
+
+    exit:
+    {
+        if (serverSocket > 0) {
+            close(serverSocket);
+        }
+    };
 }
 
 extern "C" JNIEXPORT void JNICALL
@@ -317,6 +412,66 @@ Java_com_shenby_pacwth_echo_EchoClientActivity_nativeStartTcpClient(
             close(clientSocket);
         }
     };
+
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_shenby_pacwth_echo_EchoClientActivity_nativeStartUdpClient(
+        JNIEnv *env,
+        jobject obj,
+        jstring ip,
+        jint port,
+        jstring message) {
+    int clientSocket = NewUdpSocket(env, obj);
+    if (nullptr == env->ExceptionOccurred()) {
+        struct sockaddr_in address;
+        memset(&address, 0, sizeof(address));
+        address.sin_family = PF_INET;
+
+        //以c字符串形式获取IP地址
+        const char *ipAddress = env->GetStringUTFChars(ip, nullptr);
+        if (env->ExceptionOccurred() != nullptr) goto exit;
+        //将IP地址字符串转换成网络地址
+        //0:失败
+        int result = inet_aton(ipAddress, &(address.sin_addr));
+        env->ReleaseStringUTFChars(ip, ipAddress);
+
+        if (0 == result) {
+            ThrowErrnoException(env, "java/io/IOException", errno);
+            goto exit;
+        }
+
+        //将端口转换为网络字节顺序
+        address.sin_port = htons(port);
+
+        //以C字符串形式获取消息
+        const char *messageText = env->GetStringUTFChars(message, nullptr);
+        if (nullptr == messageText) {
+            goto exit;
+        }
+        //获取消息大小
+        jsize messageSize = env->GetStringUTFLength(message);
+        //发送消息给socket
+        SendDatagramToSocket(env, obj, clientSocket, &address, messageText, messageSize);
+
+        env->ReleaseStringUTFChars(message, messageText);
+        //如果发送失败
+        if (env->ExceptionOccurred() != nullptr) goto exit;
+
+        char buffer[MAX_BUFFER_SIZE];
+        //清除地址
+        memset(&address, 0, sizeof(address));
+        //从socket中接收
+        ReceiveDatagramFromSocket(env, obj, clientSocket, &address, buffer, MAX_BUFFER_SIZE);
+    }
+
+    exit:
+    {
+        if (clientSocket > 0) {
+            close(clientSocket);
+        }
+    };
+
 
 }
 
@@ -626,4 +781,68 @@ static void ConnectToAddress(
             LogMessage(env, obj, "Connected.");
         }
     }
+}
+
+static int NewUdpSocket(JNIEnv *env, jobject obj) {
+    LogMessage(env, obj, "Constructing a new UDP socket...");
+    //SOCK_DGRAM:UDP
+    int udpSocket = socket(PF_INET, SOCK_DGRAM, 0);
+    if (udpSocket == -1) {
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    }
+    return udpSocket;
+}
+
+static ssize_t ReceiveDatagramFromSocket(
+        JNIEnv *env,
+        jobject obj,
+        int sd,
+        struct sockaddr_in *address,
+        char *buffer,
+        size_t bufferSize) {
+    socklen_t addressLength = sizeof(struct sockaddr_in);
+
+    LogMessage(env, obj, "Receiving from the socket...");
+    //一个阻塞函数，接收数据保存到buffer中
+    //成功时返回接收到的数据的大小；失败返回-1；连接失败时返回0
+    ssize_t recvSize = recvfrom(sd, buffer, bufferSize, 0,
+                                (struct sockaddr *) address, &addressLength);
+
+    if (recvSize == -1) {
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    } else {
+        //记录地址
+        LogAddress(env, obj, "Received from ", address);
+        //形成一个字符串
+        buffer[recvSize] = '\0';
+        if (recvSize > 0) {
+            LogMessage(env, obj, "Received %d bytes : %s", recvSize, buffer);
+        } else {
+            LogMessage(env, obj, "Socket connect fail");
+        }
+    }
+    return recvSize;
+}
+
+
+static ssize_t SendDatagramToSocket(
+        JNIEnv *env,
+        jobject obj,
+        int sd,
+        const struct sockaddr_in *address,
+        const char *buffer,
+        size_t bufferSize) {
+    // Send data buffer to the socket
+    LogAddress(env, obj, "Sending to", address);
+    //阻塞函数，将buffer发送到sd
+    //成功时返回发送的长度；失败返回-1；连接失败时返回0
+    ssize_t sentSize = sendto(sd, buffer, bufferSize, 0,
+                              (struct sockaddr *) address, sizeof(struct sockaddr_in));
+    if (sentSize == -1) {
+        ThrowErrnoException(env, "java/io/IOException", errno);
+    } else if (sentSize > 0) {
+        LogMessage(env, obj, "Sent %d bytes: %s", sentSize, buffer);
+    }
+    return sentSize;
+
 }

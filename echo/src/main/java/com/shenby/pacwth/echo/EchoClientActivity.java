@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.shenby.pacwth.echo.databinding.ActivityEchoClientBinding;
 
@@ -52,10 +53,34 @@ public class EchoClientActivity extends AbstractEchoActivity {
     }
 
     private void startClient() {
-        startTcpClient();
+        final int checkedRadioButtonId = mBinding.socketType.getCheckedRadioButtonId();
+        Log.d(TAG, "startClient: checkedRadioButtonId = " + checkedRadioButtonId);
+        if (checkedRadioButtonId == -1) {
+            Toast.makeText(this, "请选择客户端类型", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mBinding.socketType.setEnabled(false);
+        mBinding.radioTcp.setEnabled(false);
+        mBinding.radioUcp.setEnabled(false);
+        if (mBinding.radioTcp.isChecked()) {
+            startTcpClient();
+        } else if (mBinding.radioUcp.isChecked()) {
+            startUdpClient();
+        }
+
     }
 
     private void startTcpClient() {
+        Log.d(TAG, "startTcpClient: ");
+        startClient(true);
+    }
+
+    private void startUdpClient() {
+        Log.d(TAG, "startUdpClient: ");
+        startClient(false);
+    }
+
+    private void startClient(boolean isTcp) {
         Log.d(TAG, "startTcpClient: ");
         final String message = mBinding.messageEdit.getText().toString().trim();
         final Integer port = getPort();
@@ -64,7 +89,7 @@ public class EchoClientActivity extends AbstractEchoActivity {
             Log.e(TAG, "startTcpClient: stop!! ip = %s,port = %d,message = %s");
             return;
         }
-        final ClientTask task = new ClientTask(ip, port, message);
+        final ClientTask task = new ClientTask(ip, port, message, isTcp);
         task.start();
 
     }
@@ -80,17 +105,29 @@ public class EchoClientActivity extends AbstractEchoActivity {
     private native void nativeStartTcpClient(String ip, int port, String message) throws Exception;
 
     /**
+     * 根据给定服务器IP地址和端口号启动UDP客户端，并且发送给定的消息
+     *
+     * @param ip      服务端ip地址
+     * @param port    服务端端口号
+     * @param message 发送的文本信息
+     * @throws Exception
+     */
+    private native void nativeStartUdpClient(String ip, int port, String message) throws Exception;
+
+    /**
      * 客户端任务
      */
     private class ClientTask extends AbstractEchoTask {
         private final String mIp;
         private final int mPort;
         private final String mMessage;
+        private final boolean mIsTcp;
 
-        public ClientTask(String ip, int port, String message) {
+        public ClientTask(String ip, int port, String message, boolean isTcp) {
             mIp = ip;
             mPort = port;
             mMessage = message;
+            this.mIsTcp = isTcp;
         }
 
 
@@ -98,7 +135,11 @@ public class EchoClientActivity extends AbstractEchoActivity {
         protected void onBackground() {
             logMessage("Starting client");
             try {
-                nativeStartTcpClient(mIp, mPort, mMessage);
+                if (mIsTcp) {
+                    nativeStartTcpClient(mIp, mPort, mMessage);
+                } else {
+                    nativeStartUdpClient(mIp, mPort, mMessage);
+                }
             } catch (Exception e) {
                 logMessage(e.getMessage());
             }

@@ -15,6 +15,15 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_shenby_pacwth_echo_EchoClientActivity_nativeStartTcpClient
         (JNIEnv *, jobject, jstring, jint, jstring);
 
+/*
+ * Class:     com_shenby_pacwth_echo_EchoClientActivity
+ * Method:    nativeStartUdpClient
+ * Signature: (Ljava/lang/String;ILjava/lang/String;)V
+ */
+JNIEXPORT void JNICALL
+Java_com_shenby_pacwth_echo_EchoClientActivity_nativeStartUdpClient
+        (JNIEnv *, jobject, jstring, jint, jstring);
+
 #ifdef __cplusplus
 }
 #endif

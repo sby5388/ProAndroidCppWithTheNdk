@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.shenby.pacwth.echo.databinding.ActivityEchoServerBinding;
 
@@ -54,14 +55,40 @@ public class EchoServerActivity extends AbstractEchoActivity {
     }
 
     private void startServer() {
+        final int checkedRadioButtonId = mBinding.socketType.getCheckedRadioButtonId();
+        Log.d(TAG, "startClient: checkedRadioButtonId = " + checkedRadioButtonId);
+        if (checkedRadioButtonId == -1) {
+            Toast.makeText(this, "请选择服务端类型", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mBinding.socketType.setEnabled(false);
+        mBinding.radioTcp.setEnabled(false);
+        mBinding.radioUcp.setEnabled(false);
+        if (mBinding.radioTcp.isChecked()) {
+            startTcpServer();
+        } else if (mBinding.radioUcp.isChecked()) {
+            startUdpServer();
+        }
         startTcpServer();
     }
 
+
     private void startTcpServer() {
+        Log.d(TAG, "startTcpServer: ");
+        startServer(true);
+    }
+
+    private void startUdpServer() {
+        Log.d(TAG, "startUdpServer: ");
+        startServer(false);
+    }
+
+
+    private void startServer(boolean isTcp) {
         final Integer port = getPort();
         if (port != null && port != -1) {
             Log.d(TAG, "startTcpServer: port = " + port);
-            final ServerTask task = new ServerTask(port);
+            final ServerTask task = new ServerTask(port, isTcp);
             task.start();
         } else {
             Log.e(TAG, "startTcpServer: port = " + port);
@@ -92,16 +119,22 @@ public class EchoServerActivity extends AbstractEchoActivity {
          * 端口号
          */
         private final int mPort;
+        private final boolean mIsTcp;
 
-        public ServerTask(int port) {
+        public ServerTask(int port, boolean isTcp) {
             mPort = port;
+            mIsTcp = isTcp;
         }
 
         @Override
         protected void onBackground() {
             logMessage("Starting server");
             try {
-                nativeStartTcpServer(mPort);
+                if (mIsTcp) {
+                    nativeStartTcpServer(mPort);
+                } else {
+                    nativeStartUdpServer(mPort);
+                }
             } catch (Exception e) {
                 logMessage(e.getMessage());
             }
