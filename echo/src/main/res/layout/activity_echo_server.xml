@@ -9,6 +9,7 @@
 
 
         <EditText
+            android:text="1234"
             android:id="@+id/port_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

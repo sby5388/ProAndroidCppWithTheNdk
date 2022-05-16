@@ -255,6 +255,7 @@ Java_com_shenby_pacwth_echo_EchoServerActivity_nativeStartTcpServer(
         }
         //关闭客户端socket
         close(clientSocket);
+        LogMessage(env, obj, "关闭Socket客户端 %d", clientSocket);
 
     }
 
@@ -474,6 +475,7 @@ static void ListenOnSocket(
         // Throw an exception with error number
         ThrowErrnoException(env, "java/io/IOException", errno);
     }
+    LogMessage(env, obj, "ListenOnSocket last");
 }
 
 static void LogAddress(

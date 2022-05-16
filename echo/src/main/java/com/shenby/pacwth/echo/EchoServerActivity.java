@@ -50,6 +50,7 @@ public class EchoServerActivity extends AbstractEchoActivity {
         mBinding.logView.append("\n");
         // TODO: 2022/5/14
         mBinding.logScroll.fullScroll(View.FOCUS_DOWN);
+        Log.d(TAG, "logMessageDirect: " + message);
     }
 
     private void startServer() {
