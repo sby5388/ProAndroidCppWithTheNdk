@@ -5,6 +5,15 @@ cmake_minimum_required(VERSION 3.4.1)
 find_package(SWIG REQUIRED)
 include(${SWIG_USE_FILE})
 
+#add_subdirectory("pugixml-1.15")
+
+add_library(pugixml
+        STATIC
+        ./pugixml-1.15/src/pugixml.cpp
+)
+
+add_library(landXml SHARED LandXmlReader.cpp LandFace.cpp)
+
 add_library(hello-jni SHARED
         Unix_wrap.c
         MyEnum_wrap.c
@@ -20,5 +29,10 @@ add_library(hello-jni SHARED
 # Include libraries needed for hello-jni lib
 target_link_libraries(hello-jni
         android
+        #下一行是链接了Android的日志模块 log
+        log)
+
+target_link_libraries(landXml
+        pugixml
         #下一行是链接了Android的日志模块 log
         log)
