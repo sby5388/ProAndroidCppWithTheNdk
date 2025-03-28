@@ -3,6 +3,52 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        // 阿里云 Maven 仓库
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+        // 华为 Maven 仓库
+        maven { url 'https://repo.huaweicloud.com/repository/maven/' }
+
+        mavenCentral()
+        maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/central"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/gradle-plugin"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/apache-snapshots"
+        }
+
+        maven { url 'https://mvnrepository.com/artifact' }
+        google()
+        maven { url 'https://repo.osgeo.org/repository/release/' }
+        mavenCentral()
+
+        maven { url 'https://dl.google.com/dl/android/maven2' }
+        maven { url 'https://repo.maven.apache.org/maven2' }
+        maven { url 'https://jcenter.bintray.com' }
+//        maven { url 'https://repo.osgeo.org/repository/release/' }
+//        maven { url 'https://repo.mil-spec-tech.com/repository/maven-releases/' }
+//        maven { url 'https://central.sonatype.com/content/repositories/releases/' }
+
+        //jcenter() // Warning: this repository is going to shut down soon
+//        maven {
+//            url 'http://172.16.18.149:8081/repository/myself_public/'
+//            allowInsecureProtocol = true
+//        }
+//
+//        maven {
+//            url 'https://esri.bintray.com/arcgis'
+//        }
+
+        maven {
+            url 'https://esri.jfrog.io/artifactory/arcgis/'
+        }
     }
 }
 dependencyResolutionManagement {
@@ -10,12 +56,59 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        // 阿里云 Maven 仓库
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+        // 华为 Maven 仓库
+        maven { url 'https://repo.huaweicloud.com/repository/maven/' }
+
+        mavenCentral()
+        maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/central"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/gradle-plugin"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/apache-snapshots"
+        }
+
+        maven { url 'https://mvnrepository.com/artifact' }
+        google()
+        maven { url 'https://repo.osgeo.org/repository/release/' }
+        mavenCentral()
+
+        maven { url 'https://dl.google.com/dl/android/maven2' }
+        maven { url 'https://repo.maven.apache.org/maven2' }
+        maven { url 'https://jcenter.bintray.com' }
+//        maven { url 'https://repo.osgeo.org/repository/release/' }
+//        maven { url 'https://repo.mil-spec-tech.com/repository/maven-releases/' }
+//        maven { url 'https://central.sonatype.com/content/repositories/releases/' }
+
+        //jcenter() // Warning: this repository is going to shut down soon
+//        maven {
+//            url 'http://172.16.18.149:8081/repository/myself_public/'
+//            allowInsecureProtocol = true
+//        }
+//
+//        maven {
+//            url 'https://esri.bintray.com/arcgis'
+//        }
+
+        maven {
+            url 'https://esri.jfrog.io/artifactory/arcgis/'
+        }
     }
 }
 rootProject.name = "ProAndroidCppWithTheNdk"
-include ':app'
+//include ':app'
 include ':chap02-cmake'
-include ':chap02-ndk-build'
-include ':chap07-threads'
-include ':echo'
-include ':JavaSocketTest'
+//include ':chap02-ndk-build'
+//include ':chap07-threads'
+//include ':echo'
+//include ':JavaSocketTest'

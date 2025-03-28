@@ -8,5 +8,5 @@
 
 package com.shenby.swig;
 
-public class MyEnum implements MyEnumConstants {
+public class LandXml {
 }
