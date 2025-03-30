@@ -106,9 +106,11 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ProAndroidCppWithTheNdk"
-//include ':app'
+include ':app'
 include ':chap02-cmake'
-//include ':chap02-ndk-build'
-//include ':chap07-threads'
-//include ':echo'
-//include ':JavaSocketTest'
+include ':chap02-ndk-build'
+include ':chap07-threads'
+include ':echo'
+include ':JavaSocketTest'
+include ':pugixml'
+include ':readlandxml'

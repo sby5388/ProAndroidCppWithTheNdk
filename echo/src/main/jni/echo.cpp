@@ -296,7 +296,7 @@ Java_com_shenby_pacwth_echo_EchoServerActivity_nativeStartTcpServer(
         ssize_t recvSize;
         ssize_t sentSize;
         //接收并发送数据
-        while (1) {
+        while (true) {
             //从socket中接收
             recvSize = ReceiveFromSocket(env, obj, clientSocket, buffer, MAX_BUFFER_SIZE);
             if (0 == recvSize || env->ExceptionOccurred() != nullptr) {

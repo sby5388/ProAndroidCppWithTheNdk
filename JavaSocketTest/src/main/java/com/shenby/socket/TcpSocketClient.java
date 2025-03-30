@@ -16,10 +16,10 @@ public class TcpSocketClient {
     }
 
     private static void startTcpSocketServer(String hostName, int port) throws IOException {
-        final Socket socket = new Socket(hostName, port);
         try (
-             final InputStream inputStream = socket.getInputStream();
-             final OutputStream outputStream = socket.getOutputStream();
+                final Socket socket = new Socket(hostName, port);
+                final InputStream inputStream = socket.getInputStream();
+                final OutputStream outputStream = socket.getOutputStream();
         ) {
             outputStream.write("come from client".getBytes(StandardCharsets.UTF_8));
             outputStream.write("uuu end".getBytes(StandardCharsets.UTF_8));

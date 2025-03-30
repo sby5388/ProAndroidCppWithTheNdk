@@ -2,7 +2,7 @@
 // Created by shenby07 on 2022/5/10.
 //
 //定义使用信号量来同步线程
-#define USE_SEM 1
+//#define USE_SEM 1
 
 #include <jni.h>
 #include <cstdio>
@@ -296,7 +296,7 @@ static void *nativeWorkerThread(void *args) {
     JNIEnv *env = nullptr;
     //将当前线程附加到Java虚拟机上
     //并且获得JNIENV接口指针
-    if (0 == gVm->AttachCurrentThread(&env, nullptr)) {
+    if (0 == gVm->AttachCurrentThread(reinterpret_cast<void **>(&env), nullptr)) {
         //获取原生worker参数
         NativeWorkerArgs *pArgs = (NativeWorkerArgs *) args;
         //在线程上下文中运行原生worker

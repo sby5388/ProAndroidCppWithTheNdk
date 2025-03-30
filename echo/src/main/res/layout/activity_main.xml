@@ -10,12 +10,12 @@
         android:id="@+id/button_tcp_client"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tcp-socket-client" />
+        android:text="tcp/udp-socket-client" />
 
     <Button
         android:id="@+id/button_tcp_server"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tcp-socket-server" />
+        android:text="tcp/udp-socket-server" />
 
 </LinearLayout>

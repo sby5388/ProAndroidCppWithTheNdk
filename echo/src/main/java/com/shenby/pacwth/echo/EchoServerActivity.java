@@ -87,11 +87,19 @@ public class EchoServerActivity extends AbstractEchoActivity {
     private void startServer(boolean isTcp) {
         final Integer port = getPort();
         if (port != null && port != -1) {
-            Log.d(TAG, "startTcpServer: port = " + port);
+            if (isTcp) {
+                Log.d(TAG, "startTcpServer: port = " + port);
+            } else {
+                Log.d(TAG, "startUdpServer: port = " + port);
+            }
             final ServerTask task = new ServerTask(port, isTcp);
             task.start();
         } else {
-            Log.e(TAG, "startTcpServer: port = " + port);
+            if (isTcp) {
+                Log.d(TAG, "startTcpServer: port = " + port);
+            } else {
+                Log.d(TAG, "startUdpServer: port = " + port);
+            }
         }
     }
 

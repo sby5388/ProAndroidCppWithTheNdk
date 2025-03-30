@@ -11,11 +11,18 @@ class SwigBean {
      * 编译参数，默认为空
      */
     String mArgs = ""
+    String myPackage = ""
+
+    SwigBean(String moduleName, boolean isCxx, String args, String myPackage) {
+        this(moduleName, isCxx, args)
+        this.myPackage = myPackage
+    }
 
     SwigBean(String moduleName, boolean isCxx, String args) {
         mModuleName = moduleName
         mIsCxx = isCxx
         mArgs = args
+        myPackage = ""
     }
 
     SwigBean(String moduleName) {
@@ -69,13 +76,20 @@ def addSwigTask(SwigBean bean, String projectDirPath, String swigPackage, boolea
     def cmd = "swig"
     def cxx = bean.ismIsCxx()
 
-    def javaOutDir = "${projectDirPath}/src/main/java/${swigPackage.replace(".", "/")}"
-    def wrapName = bean.mIsCxx ? "_wrap.cxx" : "_wrap.c"
-    def nativeFileName = "${projectDirPath}/src/main/jni/${bean.mModuleName}${wrapName}"
+    if (bean.myPackage != null && bean.myPackage.length() > 0) {
+        swigPackage = bean.myPackage
+    }
+
     def swigFilePath = "${projectDirPath}/src/main/jni/${bean.mModuleName}.i"
+    def wrapName = bean.mIsCxx ? "_wrap.cxx" : "_wrap.c"
+
+    def javaOutDir = "${projectDirPath}/swig/java/${swigPackage.replace(".", "/")}"
+//    def nativeFileName = "${projectDirPath}/swig/jni/${bean.mModuleName}${wrapName}"
+    def nativeFileName = "${projectDirPath}/src/main/jni/${bean.mModuleName}${wrapName}"
+
 
     if (isWindows) {
-        //todo windows 还没有编写好脚本
+        // windows
         if (cxx) {
             runWindowsExec(cmd,
                     "-c++",
