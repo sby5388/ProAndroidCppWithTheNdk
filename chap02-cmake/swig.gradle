@@ -54,7 +54,7 @@ task runSwig() {
                 new SwigBean("CppStruct", true, " "),
                 new SwigBean("CppClass", true, " "),
                 new SwigBean("AsyncProvider", true, " "),
-                new SwigBean("LandXml", true, " "),
+//                new SwigBean("LandXml", true, " "),
 
         ]
 

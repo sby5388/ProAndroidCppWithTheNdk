@@ -41,17 +41,17 @@ public:
     long getCount();
 
 
-    /**
-     * 获取某个面(包含三个点)
-     */
-    double *getSjwData(long index);
+//    /**
+//     * 获取某个面(包含三个点)
+//     */
+//    double *getSjwData(long index);
 
     /**
      * 加载某一个序号的面对象
      * @param index
      * @return
      */
-    LandFace* loadLandFace(long index);
+    LandFace *loadLandFace(long index);
 
     /**
      * 关闭
@@ -61,11 +61,11 @@ public:
 private:
     pugi::xml_document doc;
     pugi::xml_parse_result result;
-    // 存储 ID-NCoordinate 的映射
-    std::unordered_map<int, NCoordinate> coordinateMap;
-    std::vector<LandFace> landFaces;
 
-    LandFace emptyFace;
+    std::vector<LandFace*> landFaces;
+
+    LandFace *emptyFace;
+    bool hasClosed = false;
 
 };
 

@@ -1,8 +1,6 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
+
         // 阿里云 Maven 仓库
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
@@ -49,13 +47,14 @@ pluginManagement {
         maven {
             url 'https://esri.jfrog.io/artifactory/arcgis/'
         }
+        gradlePluginPortal()
+        google()
+        mavenCentral()
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        mavenCentral()
 
         // 阿里云 Maven 仓库
         maven { url 'https://maven.aliyun.com/repository/public' }
@@ -103,14 +102,18 @@ dependencyResolutionManagement {
         maven {
             url 'https://esri.jfrog.io/artifactory/arcgis/'
         }
+
+        google()
+        mavenCentral()
+
     }
 }
 rootProject.name = "ProAndroidCppWithTheNdk"
-include ':app'
+//include ':app'
 include ':chap02-cmake'
-include ':chap02-ndk-build'
-include ':chap07-threads'
-include ':echo'
-include ':JavaSocketTest'
+//include ':chap02-ndk-build'
+//include ':chap07-threads'
+//include ':echo'
+//include ':JavaSocketTest'
 include ':pugixml'
 include ':readlandxml'

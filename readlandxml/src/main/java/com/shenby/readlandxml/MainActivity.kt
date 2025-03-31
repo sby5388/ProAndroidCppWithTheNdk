@@ -2,6 +2,7 @@ package com.shenby.readlandxml
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.shenby.swig.LandXmlReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -39,14 +41,15 @@ class MainActivity : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.loadLandXml)
         button.setOnClickListener {
-            loadLandXml()
+            loadLandXml(button)
         }
     }
 
-    private fun loadLandXml() {
+    private fun loadLandXml(button: View) {
 
         lifecycleScope.launch(Dispatchers.Main) {
-            val landFile = checkLandFile("land", "")
+            button.isEnabled = false
+            val landFile = checkLandFile("land", "large_xml.xml")
             val text = if (landFile != null) {
                 "复制成功"
             } else {
@@ -57,13 +60,13 @@ class MainActivity : AppCompatActivity() {
             landFile?.let {
                 readLandXmlFile(it)
             }
-
+            button.isEnabled = true
         }
 
 
     }
 
-    private fun readLandXmlFile(file: File) {
+    private suspend fun readLandXmlFile(file: File) = withContext(Dispatchers.Default) {
         Log.d(TAG, "readLandXmlFile: filePath: ${file.path}")
         val reader = LandXmlReader()
         reader.setLandXml(file.absolutePath)
@@ -74,14 +77,20 @@ class MainActivity : AppCompatActivity() {
             if (count > 0) {
                 val faceFirst = reader.loadLandFace(0)
                 val faceLast = reader.loadLandFace(count - 1)
+
+                Log.d(TAG, "readLandXmlFile: faceFirst.x1 = ${faceFirst.x1}")
+                Log.d(TAG, "readLandXmlFile: faceFirst.x2 = ${faceFirst.x2}")
+                Log.d(TAG, "readLandXmlFile: faceFirst.x3 = ${faceFirst.x3}")
+
                 Log.d(TAG, "readLandXmlFile: faceFirst = ${faceFirst.show()}")
                 Log.d(TAG, "readLandXmlFile: faceLast = ${faceLast.show()}")
+
+
             }
         }
 
 
         reader.close()
-
     }
 
 
