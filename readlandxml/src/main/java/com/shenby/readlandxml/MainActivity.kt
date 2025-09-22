@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             button.isEnabled = false
             val landFile = checkLandFile("land", "large_xml.xml")
+//            val landFile = checkLandFile("land", "wfs-20240511.xml")
             val text = if (landFile != null) {
                 "复制成功"
             } else {
@@ -70,6 +71,17 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "readLandXmlFile: filePath: ${file.path}")
         val reader = LandXmlReader()
         reader.setLandXml(file.absolutePath)
+       val openSuccess:Boolean =  reader.checkFileContent()
+        if (!openSuccess){
+            reader.close()
+            Log.d(TAG, "readLandXmlFile: 打开文件失败")
+            withContext(Dispatchers.Main){
+                Toast.makeText(this@MainActivity,"打开文件失败",Toast.LENGTH_SHORT).show()
+            }
+            return@withContext
+        }
+
+        
         val success = reader.readData()
         Log.d(TAG, "readLandXmlFile: readData = $success")
         if (success) {
@@ -91,6 +103,10 @@ class MainActivity : AppCompatActivity() {
 
 
         reader.close()
+        Log.d(TAG, "readLandXmlFile: 打开文件成功")
+        withContext(Dispatchers.Main){
+            Toast.makeText(this@MainActivity,"打开文件成功",Toast.LENGTH_SHORT).show()
+        }
     }
 
 

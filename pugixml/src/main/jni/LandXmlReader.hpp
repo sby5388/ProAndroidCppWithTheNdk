@@ -29,6 +29,12 @@ public:
     void setLandXml(const string &path);
 
     /**
+     * 检查xml文件的数据是否合规
+     * @return
+     */
+    bool checkFileContent();
+
+    /**
      * 读取数据
      * @return
      */

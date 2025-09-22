@@ -23,7 +23,7 @@ LandXmlReader::~LandXmlReader() {
 
 
 bool LandXmlReader::readData() {
-    cout << result.description() << endl;
+    //cout << result.description() << endl;
     if (!result) {
         LOGE("Error loading XML file:%s\n", result.description());
         return false;
@@ -170,4 +170,32 @@ LandFace *LandXmlReader::loadLandFace(long index) {
 void LandXmlReader::setLandXml(const string &path) {
     LOGD("Error setLandXml file:%s\n", path.c_str());
     result = doc.load_file(path.c_str());
+}
+
+bool LandXmlReader::checkFileContent(){
+    if (!result) {
+        LOGE("Error loading XML file:%s\n", result.description());
+        return false;
+    }
+
+
+    const pugi::xml_node &landXMlNode = doc.child("LandXML");
+    if(landXMlNode.empty()){
+        LOGD("readData surfType :landXMlNode==null\n");
+        return false;
+    }
+
+    const pugi::xml_node &surfacesNode = landXMlNode.child("Surfaces");
+    if (surfacesNode.empty()) {
+        LOGD("readData surfType :surfacesNode==null\n");
+        return false;
+    }
+
+    const pugi::xml_node &surfaceNode = surfacesNode.child(
+            "Surface");
+    if (surfaceNode.empty()) {
+        LOGD("readData surfType :surfaceNode==null\n");
+        return false;
+    }
+    return true;
 }
