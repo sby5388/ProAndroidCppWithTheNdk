@@ -59,6 +59,11 @@ public:
      */
     LandFace *loadLandFace(long index);
 
+
+    long getCoordinateCount();
+
+    NCoordinate *loadNCoordinate(long index);
+
     /**
      * 关闭
      */
@@ -69,8 +74,15 @@ private:
     pugi::xml_parse_result result;
 
     std::vector<LandFace*> landFaces;
+    /**
+     * 存放三角网节点数据
+     */
+    std::vector<NCoordinate*> coordinates;
 
     LandFace *emptyFace;
+
+    NCoordinate *emptyCoordinate;
+
     bool hasClosed = false;
 
 };

@@ -29,6 +29,17 @@ public class LandXmlJNI {
   public final static native double LandFace_y3_get(long jarg1, LandFace jarg1_);
   public final static native void LandFace_z3_set(long jarg1, LandFace jarg1_, double jarg2);
   public final static native double LandFace_z3_get(long jarg1, LandFace jarg1_);
+  public final static native void NCoordinate_id_set(long jarg1, NCoordinate jarg1_, int jarg2);
+  public final static native int NCoordinate_id_get(long jarg1, NCoordinate jarg1_);
+  public final static native void NCoordinate_x_set(long jarg1, NCoordinate jarg1_, double jarg2);
+  public final static native double NCoordinate_x_get(long jarg1, NCoordinate jarg1_);
+  public final static native void NCoordinate_y_set(long jarg1, NCoordinate jarg1_, double jarg2);
+  public final static native double NCoordinate_y_get(long jarg1, NCoordinate jarg1_);
+  public final static native void NCoordinate_z_set(long jarg1, NCoordinate jarg1_, double jarg2);
+  public final static native double NCoordinate_z_get(long jarg1, NCoordinate jarg1_);
+  public final static native long new_NCoordinate__SWIG_0();
+  public final static native long new_NCoordinate__SWIG_1(int jarg1, double jarg2, double jarg3, double jarg4);
+  public final static native void delete_NCoordinate(long jarg1);
   public final static native long new_LandXmlReader();
   public final static native void delete_LandXmlReader(long jarg1);
   public final static native void LandXmlReader_setLandXml(long jarg1, LandXmlReader jarg1_, String jarg2);
@@ -36,5 +47,7 @@ public class LandXmlJNI {
   public final static native boolean LandXmlReader_readData(long jarg1, LandXmlReader jarg1_);
   public final static native int LandXmlReader_getCount(long jarg1, LandXmlReader jarg1_);
   public final static native long LandXmlReader_loadLandFace(long jarg1, LandXmlReader jarg1_, int jarg2);
+  public final static native int LandXmlReader_getCoordinateCount(long jarg1, LandXmlReader jarg1_);
+  public final static native long LandXmlReader_loadNCoordinate(long jarg1, LandXmlReader jarg1_, int jarg2);
   public final static native void LandXmlReader_close(long jarg1, LandXmlReader jarg1_);
 }

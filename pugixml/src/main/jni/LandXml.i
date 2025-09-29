@@ -3,6 +3,7 @@
 %{
 //#include "LandFace.h"
 #include "./pugixml115/src/pugixml.hpp"
+#include "NCoordinate.hpp"
 #include "LandXmlReader.hpp"
 #include "LandFace.h"
 
@@ -17,4 +18,5 @@ return $jnicall;
 }
 
 %include "LandFace.h"
+%include "NCoordinate.hpp"
 %include "LandXmlReader.hpp"

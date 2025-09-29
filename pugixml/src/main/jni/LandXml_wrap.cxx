@@ -242,6 +242,7 @@ template <typename T> T SwigValueInit() {
 
 //#include "LandFace.h"
 #include "./pugixml115/src/pugixml.hpp"
+#include "NCoordinate.hpp"
 #include "LandXmlReader.hpp"
 #include "LandFace.h"
 
@@ -1149,6 +1150,160 @@ SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_LandFace_1z3_1get(JNI
 }
 
 
+SWIGEXPORT void JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1id_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->id = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1id_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  result = (int) ((arg1)->id);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1x_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->x = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1x_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  result = (double) ((arg1)->x);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1y_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->y = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1y_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  result = (double) ((arg1)->y);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1z_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->z = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_NCoordinate_1z_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(NCoordinate **)&jarg1; 
+  result = (double) ((arg1)->z);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_shenby_swig_LandXmlJNI_new_1NCoordinate_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  NCoordinate *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (NCoordinate *)new NCoordinate();
+  *(NCoordinate **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_shenby_swig_LandXmlJNI_new_1NCoordinate_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jint jarg1, jdouble jarg2, jdouble jarg3, jdouble jarg4) {
+  jlong jresult = 0 ;
+  int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  NCoordinate *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  arg2 = (double)jarg2; 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  result = (NCoordinate *)new NCoordinate(arg1,arg2,arg3,arg4);
+  *(NCoordinate **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_shenby_swig_LandXmlJNI_delete_1NCoordinate(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  NCoordinate *arg1 = (NCoordinate *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(NCoordinate **)&jarg1; 
+  delete arg1;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_shenby_swig_LandXmlJNI_new_1LandXmlReader(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   LandXmlReader *result = 0 ;
@@ -1250,6 +1405,38 @@ SWIGEXPORT jlong JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1loadLand
   arg2 = (long)jarg2; 
   result = (LandFace *)(arg1)->loadLandFace(arg2);
   *(LandFace **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1getCoordinateCount(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  LandXmlReader *arg1 = (LandXmlReader *) 0 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LandXmlReader **)&jarg1; 
+  result = (long)(arg1)->getCoordinateCount();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1loadNCoordinate(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  LandXmlReader *arg1 = (LandXmlReader *) 0 ;
+  long arg2 ;
+  NCoordinate *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LandXmlReader **)&jarg1; 
+  arg2 = (long)jarg2; 
+  result = (NCoordinate *)(arg1)->loadNCoordinate(arg2);
+  *(NCoordinate **)&jresult = result; 
   return jresult;
 }
 

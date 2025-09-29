@@ -73,6 +73,15 @@ public class LandXmlReader {
     return (cPtr == 0) ? null : new LandFace(cPtr, false);
   }
 
+  public int getCoordinateCount() {
+    return LandXmlJNI.LandXmlReader_getCoordinateCount(swigCPtr, this);
+  }
+
+  public NCoordinate loadNCoordinate(int index) {
+    long cPtr = LandXmlJNI.LandXmlReader_loadNCoordinate(swigCPtr, this, index);
+    return (cPtr == 0) ? null : new NCoordinate(cPtr, false);
+  }
+
   public void close() {
     LandXmlJNI.LandXmlReader_close(swigCPtr, this);
   }

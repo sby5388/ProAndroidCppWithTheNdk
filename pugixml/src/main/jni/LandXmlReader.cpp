@@ -15,6 +15,7 @@ using namespace std;
 
 LandXmlReader::LandXmlReader() {
     emptyFace = new LandFace();
+    emptyCoordinate = new NCoordinate();
 }
 
 LandXmlReader::~LandXmlReader() {
@@ -38,7 +39,7 @@ bool LandXmlReader::readData() {
     LOGD("readData elevMin : %s\n", nodeDefinition.attribute("elevMin").value());
 
     // 存储 ID-NCoordinate 的映射
-    std::unordered_map<int, NCoordinate> coordinateMap;
+    std::unordered_map<int, NCoordinate*> coordinateMap;
 
     int pId = 1;
 
@@ -57,7 +58,9 @@ bool LandXmlReader::readData() {
         iss >> x >> y >> z;
 
         // 创建 NCoordinate 对象并添加到映射中
-        coordinateMap[id] = NCoordinate(id, x, y, z);
+        auto coordinate = new  NCoordinate(id, x, y, z);
+        coordinateMap[id] = coordinate;
+        coordinates.push_back(coordinate);
     }
     LOGD("readData coordinateMap.size : %lu\n", coordinateMap.size());
 
@@ -83,17 +86,17 @@ bool LandXmlReader::readData() {
 
             // 创建 LandFace 对象
             auto face = new LandFace();
-            face->x1 = coordinateMap[key1].x;
-            face->y1 = coordinateMap[key1].y;
-            face->z1 = coordinateMap[key1].z;
+            face->x1 = coordinateMap[key1]->x;
+            face->y1 = coordinateMap[key1]->y;
+            face->z1 = coordinateMap[key1]->z;
 
-            face->x2 = coordinateMap[key2].x;
-            face->y2 = coordinateMap[key2].y;
-            face->z2 = coordinateMap[key2].z;
+            face->x2 = coordinateMap[key2]->x;
+            face->y2 = coordinateMap[key2]->y;
+            face->z2 = coordinateMap[key2]->z;
 
-            face->x3 = coordinateMap[key3].x;
-            face->y3 = coordinateMap[key3].y;
-            face->z3 = coordinateMap[key3].z;
+            face->x3 = coordinateMap[key3]->x;
+            face->y3 = coordinateMap[key3]->y;
+            face->z3 = coordinateMap[key3]->z;
             // 将 LandFace 添加到列表中
             landFaces.push_back(face);
         }
@@ -123,27 +126,7 @@ void LandXmlReader::close() {
     delete emptyFace;
     LOGD("close--landFaceCount = %d\n", landFaceCount);
 }
-//
-//double *LandXmlReader::getSjwData(const long index) {
-//    if (index < 0 || index >= landFaces.size()) {
-//        double *result = new double[1];
-//        result[0] = 0;
-//        return result;
-//    }
-//    const auto *face = landFaces[index];
-//    double *a = new double[9];
-//    a[0] = face->x1;
-//    a[1] = face->y1;
-//    a[2] = face->z1;
-//    a[3] = face->x2;
-//    a[4] = face->y2;
-//    a[5] = face->z2;
-//    a[6] = face->x3;
-//    a[7] = face->y3;
-//    a[8] = face->z3;
-//
-//    return a;
-//}
+
 
 /**
  * 加载某一个序号的面对象
@@ -166,13 +149,25 @@ LandFace *LandXmlReader::loadLandFace(long index) {
     return landFaces[index];
 }
 
+long LandXmlReader::getCoordinateCount() {
+    return coordinates.size();
+}
+
+NCoordinate *LandXmlReader::loadNCoordinate(long index) {
+
+    if (index < 0 || index >= coordinates.size()) {
+        return emptyCoordinate;
+    }
+    return coordinates[index];
+}
+
 
 void LandXmlReader::setLandXml(const string &path) {
     LOGD("Error setLandXml file:%s\n", path.c_str());
     result = doc.load_file(path.c_str());
 }
 
-bool LandXmlReader::checkFileContent(){
+bool LandXmlReader::checkFileContent() {
     if (!result) {
         LOGE("Error loading XML file:%s\n", result.description());
         return false;
@@ -180,7 +175,7 @@ bool LandXmlReader::checkFileContent(){
 
 
     const pugi::xml_node &landXMlNode = doc.child("LandXML");
-    if(landXMlNode.empty()){
+    if (landXMlNode.empty()) {
         LOGD("readData surfType :landXMlNode==null\n");
         return false;
     }
