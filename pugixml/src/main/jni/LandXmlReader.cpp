@@ -10,6 +10,7 @@
 #include <iostream>
 
 extern int landFaceCount;
+extern int coordinateCount;
 using namespace std;
 
 
@@ -125,6 +126,16 @@ void LandXmlReader::close() {
 
     delete emptyFace;
     LOGD("close--landFaceCount = %d\n", landFaceCount);
+    // 释放每个指针并清空向量
+    for (NCoordinate *coordinate: coordinates) {
+        delete coordinate;  // 删除指针指向的对象
+    }
+    coordinates.clear();  // 清空向量
+
+    delete emptyCoordinate;
+    LOGD("close--coordinateCount = %d\n", coordinateCount);
+
+
 }
 
 
