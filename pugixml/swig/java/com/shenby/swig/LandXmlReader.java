@@ -68,6 +68,22 @@ public class LandXmlReader {
     return LandXmlJNI.LandXmlReader_getCount(swigCPtr, this);
   }
 
+  public double getArea2d() {
+    return LandXmlJNI.LandXmlReader_getArea2d(swigCPtr, this);
+  }
+
+  public double getArea3d() {
+    return LandXmlJNI.LandXmlReader_getArea3d(swigCPtr, this);
+  }
+
+  public double getElevMax() {
+    return LandXmlJNI.LandXmlReader_getElevMax(swigCPtr, this);
+  }
+
+  public double getElevMin() {
+    return LandXmlJNI.LandXmlReader_getElevMin(swigCPtr, this);
+  }
+
   public LandFace loadLandFace(int index) {
     long cPtr = LandXmlJNI.LandXmlReader_loadLandFace(swigCPtr, this, index);
     return (cPtr == 0) ? null : new LandFace(cPtr, false);

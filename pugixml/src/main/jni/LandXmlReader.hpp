@@ -46,6 +46,11 @@ public:
      */
     long getCount();
 
+    double getArea2d();
+    double getArea3d();
+    double getElevMax();
+    double getElevMin();
+
 
 //    /**
 //     * 获取某个面(包含三个点)
@@ -84,6 +89,11 @@ private:
     NCoordinate *emptyCoordinate;
 
     bool hasClosed = false;
+
+    double area2d = 0.0;
+    double area3d = 0.0;
+    double elevMin = 0.0;
+    double elevMax = 0.0;
 
 };
 

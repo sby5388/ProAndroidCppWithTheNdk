@@ -1392,6 +1392,66 @@ SWIGEXPORT jint JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1getCount(
 }
 
 
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1getArea2d(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  LandXmlReader *arg1 = (LandXmlReader *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LandXmlReader **)&jarg1; 
+  result = (double)(arg1)->getArea2d();
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1getArea3d(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  LandXmlReader *arg1 = (LandXmlReader *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LandXmlReader **)&jarg1; 
+  result = (double)(arg1)->getArea3d();
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1getElevMax(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  LandXmlReader *arg1 = (LandXmlReader *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LandXmlReader **)&jarg1; 
+  result = (double)(arg1)->getElevMax();
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1getElevMin(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  LandXmlReader *arg1 = (LandXmlReader *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LandXmlReader **)&jarg1; 
+  result = (double)(arg1)->getElevMin();
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_shenby_swig_LandXmlJNI_LandXmlReader_1loadLandFace(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   LandXmlReader *arg1 = (LandXmlReader *) 0 ;

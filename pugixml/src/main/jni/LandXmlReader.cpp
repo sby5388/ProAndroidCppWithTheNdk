@@ -23,6 +23,13 @@ LandXmlReader::~LandXmlReader() {
     close();
 }
 
+double LandXmlReader::getArea2d() { return area2d; }
+
+double LandXmlReader::getArea3d() { return area3d; }
+
+double LandXmlReader::getElevMax() { return elevMax; }
+
+double LandXmlReader::getElevMin() { return elevMin; }
 
 bool LandXmlReader::readData() {
     //cout << result.description() << endl;
@@ -40,7 +47,7 @@ bool LandXmlReader::readData() {
     LOGD("readData elevMin : %s\n", nodeDefinition.attribute("elevMin").value());
 
     // 存储 ID-NCoordinate 的映射
-    std::unordered_map<int, NCoordinate*> coordinateMap;
+    std::unordered_map<int, NCoordinate *> coordinateMap;
 
     int pId = 1;
 
@@ -59,7 +66,7 @@ bool LandXmlReader::readData() {
         iss >> x >> y >> z;
 
         // 创建 NCoordinate 对象并添加到映射中
-        auto coordinate = new  NCoordinate(id, x, y, z);
+        auto coordinate = new NCoordinate(id, x, y, z);
         coordinateMap[id] = coordinate;
         coordinates.push_back(coordinate);
     }
@@ -203,5 +210,21 @@ bool LandXmlReader::checkFileContent() {
         LOGD("readData surfType :surfaceNode==null\n");
         return false;
     }
+
+    const pugi::xml_node &nodeDefinition = surfaceNode.child("Definition");
+    if (nodeDefinition.empty()) {
+        LOGD("readData surfType :Definition==null\n");
+        return false;
+    }
+
+    area2d = nodeDefinition.attribute("area2DSurf").as_double();
+    area3d = nodeDefinition.attribute("area3DSurf").as_double();
+    elevMax = nodeDefinition.attribute("elevMax").as_double();
+    elevMin = nodeDefinition.attribute("elevMin").as_double();
+    LOGD("readData area2DSurf : %.2f\n", area2d);
+    LOGD("readData area3DSurf :%.2f\n", area3d);
+    LOGD("readData elevMax : %.2f\n", elevMax);
+    LOGD("readData elevMin : %.2f\n", elevMin);
+
     return true;
 }

@@ -80,8 +80,11 @@ class MainActivity : AppCompatActivity() {
             }
             return@withContext
         }
+        Log.d(TAG, "readLandXmlFile: area2d = ${reader.area2d}")
+        Log.d(TAG, "readLandXmlFile: area3d = ${reader.area3d}")
+        Log.d(TAG, "readLandXmlFile: elevMin = ${reader.elevMin}")
+        Log.d(TAG, "readLandXmlFile: elevMax = ${reader.elevMax}")
 
-        
         val success = reader.readData()
         Log.d(TAG, "readLandXmlFile: readData = $success")
         if (success) {

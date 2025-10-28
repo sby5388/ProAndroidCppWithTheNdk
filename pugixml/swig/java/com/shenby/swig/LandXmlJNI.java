@@ -46,6 +46,10 @@ public class LandXmlJNI {
   public final static native boolean LandXmlReader_checkFileContent(long jarg1, LandXmlReader jarg1_);
   public final static native boolean LandXmlReader_readData(long jarg1, LandXmlReader jarg1_);
   public final static native int LandXmlReader_getCount(long jarg1, LandXmlReader jarg1_);
+  public final static native double LandXmlReader_getArea2d(long jarg1, LandXmlReader jarg1_);
+  public final static native double LandXmlReader_getArea3d(long jarg1, LandXmlReader jarg1_);
+  public final static native double LandXmlReader_getElevMax(long jarg1, LandXmlReader jarg1_);
+  public final static native double LandXmlReader_getElevMin(long jarg1, LandXmlReader jarg1_);
   public final static native long LandXmlReader_loadLandFace(long jarg1, LandXmlReader jarg1_, int jarg2);
   public final static native int LandXmlReader_getCoordinateCount(long jarg1, LandXmlReader jarg1_);
   public final static native long LandXmlReader_loadNCoordinate(long jarg1, LandXmlReader jarg1_, int jarg2);
