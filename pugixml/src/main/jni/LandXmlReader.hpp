@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <sstream>
 #include "NCoordinate.hpp"
+#include "LandXmlReadProgressListener.h"
 
 using namespace std;
 
@@ -51,12 +52,6 @@ public:
     double getElevMax();
     double getElevMin();
 
-
-//    /**
-//     * 获取某个面(包含三个点)
-//     */
-//    double *getSjwData(long index);
-
     /**
      * 加载某一个序号的面对象
      * @param index
@@ -74,6 +69,10 @@ public:
      */
     void close();
 
+    void setListener(LandXmlReadProgressListener *listener);
+
+    void deleteListener();
+
 private:
     pugi::xml_document doc;
     pugi::xml_parse_result result;
@@ -88,6 +87,7 @@ private:
 
     NCoordinate *emptyCoordinate;
 
+    LandXmlReadProgressListener *listener;
     bool hasClosed = false;
 
     double area2d = 0.0;

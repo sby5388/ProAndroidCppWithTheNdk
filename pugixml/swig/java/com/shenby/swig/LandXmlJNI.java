@@ -9,6 +9,16 @@
 package com.shenby.swig;
 
 public class LandXmlJNI {
+  public final static native long new_LandXmlReadProgressListener();
+  public final static native void delete_LandXmlReadProgressListener(long jarg1);
+  public final static native void LandXmlReadProgressListener_onReadStart(long jarg1, LandXmlReadProgressListener jarg1_);
+  public final static native void LandXmlReadProgressListener_onReadStartSwigExplicitLandXmlReadProgressListener(long jarg1, LandXmlReadProgressListener jarg1_);
+  public final static native void LandXmlReadProgressListener_onReadProgress(long jarg1, LandXmlReadProgressListener jarg1_, int jarg2);
+  public final static native void LandXmlReadProgressListener_onReadProgressSwigExplicitLandXmlReadProgressListener(long jarg1, LandXmlReadProgressListener jarg1_, int jarg2);
+  public final static native void LandXmlReadProgressListener_onReadFinish(long jarg1, LandXmlReadProgressListener jarg1_);
+  public final static native void LandXmlReadProgressListener_onReadFinishSwigExplicitLandXmlReadProgressListener(long jarg1, LandXmlReadProgressListener jarg1_);
+  public final static native void LandXmlReadProgressListener_director_connect(LandXmlReadProgressListener obj, long cptr, boolean mem_own, boolean weak_global);
+  public final static native void LandXmlReadProgressListener_change_ownership(LandXmlReadProgressListener obj, long cptr, boolean take_or_release);
   public final static native long new_LandFace();
   public final static native void delete_LandFace(long jarg1);
   public final static native void LandFace_x1_set(long jarg1, LandFace jarg1_, double jarg2);
@@ -54,4 +64,21 @@ public class LandXmlJNI {
   public final static native int LandXmlReader_getCoordinateCount(long jarg1, LandXmlReader jarg1_);
   public final static native long LandXmlReader_loadNCoordinate(long jarg1, LandXmlReader jarg1_, int jarg2);
   public final static native void LandXmlReader_close(long jarg1, LandXmlReader jarg1_);
+  public final static native void LandXmlReader_setListener(long jarg1, LandXmlReader jarg1_, long jarg2, LandXmlReadProgressListener jarg2_);
+  public final static native void LandXmlReader_deleteListener(long jarg1, LandXmlReader jarg1_);
+
+  public static void SwigDirector_LandXmlReadProgressListener_onReadStart(LandXmlReadProgressListener jself) {
+    jself.onReadStart();
+  }
+  public static void SwigDirector_LandXmlReadProgressListener_onReadProgress(LandXmlReadProgressListener jself, int progress) {
+    jself.onReadProgress(progress);
+  }
+  public static void SwigDirector_LandXmlReadProgressListener_onReadFinish(LandXmlReadProgressListener jself) {
+    jself.onReadFinish();
+  }
+
+  private final static native void swig_module_init();
+  static {
+    swig_module_init();
+  }
 }

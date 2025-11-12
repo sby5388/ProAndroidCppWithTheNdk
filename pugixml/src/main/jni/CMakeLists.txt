@@ -21,7 +21,7 @@ add_library(pugixml
         ./pugixml115/src/pugixml.cpp
 )
 
-add_library(landXml SHARED NCoordinate.cpp LandXmlReader.cpp LandXml_wrap.cxx LandFace.cpp)
+add_library(landXml SHARED NCoordinate.cpp LandXmlReader.cpp LandXml_wrap.cxx LandFace.cpp LandXmlReadProgressListener.cpp)
 
 target_link_libraries(landXml
         pugixml
