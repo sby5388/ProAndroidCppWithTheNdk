@@ -254,6 +254,10 @@ void LandXmlReader::setListener(LandXmlReadProgressListener *_listener) {
 }
 
 void LandXmlReader::deleteListener() {
+    if(hasDeleteListener){
+        return;
+    }
+    hasDeleteListener = true;
     if (listener != NULL) {
         delete listener;
         listener = NULL;

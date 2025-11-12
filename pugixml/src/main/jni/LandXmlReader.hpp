@@ -48,8 +48,11 @@ public:
     long getCount();
 
     double getArea2d();
+
     double getArea3d();
+
     double getElevMax();
+
     double getElevMin();
 
     /**
@@ -77,11 +80,11 @@ private:
     pugi::xml_document doc;
     pugi::xml_parse_result result;
 
-    std::vector<LandFace*> landFaces;
+    std::vector<LandFace *> landFaces;
     /**
      * 存放三角网节点数据
      */
-    std::vector<NCoordinate*> coordinates;
+    std::vector<NCoordinate *> coordinates;
 
     LandFace *emptyFace;
 
@@ -89,6 +92,7 @@ private:
 
     LandXmlReadProgressListener *listener;
     bool hasClosed = false;
+    bool hasDeleteListener = false;
 
     double area2d = 0.0;
     double area3d = 0.0;
