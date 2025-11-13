@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import com.shenby.swig.LandXmlReadProgressListener
 import com.shenby.swig.LandXmlReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -71,22 +70,6 @@ class MainActivity : AppCompatActivity() {
     private suspend fun readLandXmlFile(file: File) = withContext(Dispatchers.Default) {
         Log.d(TAG, "readLandXmlFile: filePath: ${file.path}")
         val reader = LandXmlReader()
-        reader.setListener(object :LandXmlReadProgressListener(){
-            override fun onReadStart() {
-                super.onReadStart()
-                Log.d(TAG, "onReadStart: ")
-            }
-
-            override fun onReadProgress(progress: Int) {
-                super.onReadProgress(progress)
-                Log.d(TAG, "onReadProgress: progress = $progress")
-            }
-
-            override fun onReadFinish() {
-                super.onReadFinish()
-                Log.d(TAG, "onReadFinish: ")
-            }
-        })
         reader.setLandXml(file.absolutePath)
        val openSuccess:Boolean =  reader.checkFileContent()
         if (!openSuccess){

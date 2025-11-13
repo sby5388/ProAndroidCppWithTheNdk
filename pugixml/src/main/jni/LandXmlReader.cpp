@@ -4,7 +4,6 @@
 
 //#include "./pugixml-1.15/src/pugixml.hpp"
 #include "LandXmlReader.hpp"
-#include "LandXmlReadProgressListener.h"
 #include "android_log.h"
 #include <string>
 #include <vector>
@@ -18,7 +17,6 @@ using namespace std;
 LandXmlReader::LandXmlReader() {
     emptyFace = new LandFace();
     emptyCoordinate = new NCoordinate();
-    listener = new LandXmlReadProgressListener();
 }
 
 LandXmlReader::~LandXmlReader() {
@@ -50,13 +48,6 @@ bool LandXmlReader::readData() {
 
     // 存储 ID-NCoordinate 的映射
     std::unordered_map<int, NCoordinate *> coordinateMap;
-    if (listener != NULL) {
-        listener->onReadStart();
-    }
-
-    if (listener != NULL) {
-        listener->onReadProgress(5);
-    }
     //读取面文件分成2步，1:读取全部的P到一个Map中(Pnts->P)；2:根据Faces->F生成Face ,进度也是分成2个部分的数据
     int pId = 1;
 
@@ -80,10 +71,6 @@ bool LandXmlReader::readData() {
         coordinates.push_back(coordinate);
     }
     LOGD("readData coordinateMap.size : %lu\n", coordinateMap.size());
-
-    if (listener != NULL) {
-        listener->onReadProgress(50);
-    }
 
     bool first = true;
 
@@ -123,13 +110,8 @@ bool LandXmlReader::readData() {
         }
 
     }
-    if (listener != NULL) {
-        listener->onReadProgress(100);
-    }
     LOGD("readData landFaces.size : %lu\n", landFaces.size());
-    if (listener != NULL) {
-        listener->onReadFinish();
-    }
+
     return true;
 }
 
@@ -160,8 +142,6 @@ void LandXmlReader::close() {
 
     delete emptyCoordinate;
     LOGD("close--coordinateCount = %d\n", coordinateCount);
-    deleteListener();
-
 }
 
 
@@ -246,21 +226,5 @@ bool LandXmlReader::checkFileContent() {
     LOGD("readData elevMin : %.2f\n", elevMin);
 
     return true;
-}
-
-void LandXmlReader::setListener(LandXmlReadProgressListener *_listener) {
-    deleteListener();
-    listener = _listener;
-}
-
-void LandXmlReader::deleteListener() {
-    if(hasDeleteListener){
-        return;
-    }
-    hasDeleteListener = true;
-    if (listener != NULL) {
-        delete listener;
-        listener = NULL;
-    }
 }
 

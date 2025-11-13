@@ -102,12 +102,4 @@ public class LandXmlReader {
     LandXmlJNI.LandXmlReader_close(swigCPtr, this);
   }
 
-  public void setListener(LandXmlReadProgressListener listener) {
-    LandXmlJNI.LandXmlReader_setListener(swigCPtr, this, LandXmlReadProgressListener.getCPtr(listener), listener);
-  }
-
-  public void deleteListener() {
-    LandXmlJNI.LandXmlReader_deleteListener(swigCPtr, this);
-  }
-
 }

@@ -12,7 +12,6 @@
 #include <unordered_map>
 #include <sstream>
 #include "NCoordinate.hpp"
-#include "LandXmlReadProgressListener.h"
 
 using namespace std;
 
@@ -72,9 +71,6 @@ public:
      */
     void close();
 
-    void setListener(LandXmlReadProgressListener *listener);
-
-    void deleteListener();
 
 private:
     pugi::xml_document doc;
@@ -90,9 +86,7 @@ private:
 
     NCoordinate *emptyCoordinate;
 
-    LandXmlReadProgressListener *listener;
     bool hasClosed = false;
-    bool hasDeleteListener = false;
 
     double area2d = 0.0;
     double area3d = 0.0;

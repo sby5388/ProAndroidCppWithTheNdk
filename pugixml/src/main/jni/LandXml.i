@@ -1,10 +1,9 @@
 /** cpp */
-%module(directors = 1) LandXml
+%module LandXml
 %{
 //#include "LandFace.h"
 #include "./pugixml115/src/pugixml.hpp"
 #include "NCoordinate.hpp"
-#include "LandXmlReadProgressListener.h"
 #include "LandXmlReader.hpp"
 #include "LandFace.h"
 
@@ -18,10 +17,7 @@
 return $jnicall;
 }
 
-/* turn on director wrapping Callback */
-%feature("director") LandXmlReadProgressListener;
 
-%include "LandXmlReadProgressListener.h"
 %include "LandFace.h"
 %include "NCoordinate.hpp"
 %include "LandXmlReader.hpp"
